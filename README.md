@@ -12,3 +12,7 @@ Install the Guardian API by copying the library to the virtual environment's `li
 
     pip install -r requirements.txt
     cp -r theguardian venv/lib/python3.5  # or version of python
+
+Put API key in a file named api_key:
+
+    echo "API-KEY-HERE" > api_key
