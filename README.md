@@ -1,7 +1,7 @@
 # privacy
 Privacy project with Kylie Geller
 
-# Setup
+## Setup
 Recommend using a virtual environment:
 
     virtualenv -p python3 venv
