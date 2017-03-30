@@ -28,20 +28,17 @@ class Tag(theguardian_section.Section):
         head = self.response_headers()
 
         if page_number is None:
-            content = self.get_content_response({
-                "show-references": "all"
-            })
+            content = self.get_content_response()
             results = self.get_results(content)
-            references = self.__get_references(results)
-            return references
+            # references = self.__get_references(results)
+            return results
         elif page_number and page_number <= head["pages"]:
             content = self.get_content_response({
                 "page": page_number,
-                "show-references": "all"
             })
             results = self.get_results(content)
-            references = self.__get_references(results)
-            return references
+            # references = self.__get_references(results)
+            return results
         else:
             raise ValueError("Page number greater than available pages. Available pages {}."
                              .format(head["pages"]))
