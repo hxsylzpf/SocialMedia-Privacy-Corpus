@@ -17,10 +17,12 @@ def preprocess(record, shouldReuse):
     # we are explicitly specified to
     if not is_record_preprocessed(record) or not shouldReuse:
         # Pull out the core words from the article
+        title = record['title']
         content = record['content']
-        summarized = nlp.summarize("", content)
+        summarized = nlp.summarize(title, content)
         core_words = nlp.top_words(summarized)
         record['core-words'] = core_words
+        print(core_words)
         return True
     else:
         return False

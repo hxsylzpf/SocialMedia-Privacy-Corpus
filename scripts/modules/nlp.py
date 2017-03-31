@@ -46,7 +46,7 @@ def summarize(title, text, nLargest=10):
 
     # Score the sentences
     sentence_scores = {}
-    title_lemmas = [str(w.lemma_).lower() for w in title_doc if t.ent_type == 0 and not t.is_stop and not t.is_punct and t.is_space] + [str(e.lemma_).loweR() for e in title_doc.ents]
+    title_lemmas = [str(w.lemma_).lower() for w in title_doc if w.ent_type == 0 and not w.is_stop and not w.is_punct and w.is_space] + [str(e.lemma_).lower() for e in title_doc.ents]
     for i, sent in enumerate(doc.sents):
         score = 0
         sent_doc = nlp(sent.text)
@@ -56,7 +56,7 @@ def summarize(title, text, nLargest=10):
             tf = lemma_counts[token] / float(sum(lemma_counts.values()))
             # Give a bonus to this word if it appears in the title
             if token in title_lemmas:
-                tf *= 2
+                tf *= 1.1
             score += tf
         sentence_scores[i] = score
 
