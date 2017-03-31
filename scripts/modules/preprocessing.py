@@ -2,7 +2,7 @@
     preprocessing.py
     Responsible for performing preprocessing on the data
 """
-from collections import Counter
+from . import nlp
 
 # Checks whether a record (json object) has already been preprocessed
 def is_record_preprocessed(record):
@@ -17,11 +17,9 @@ def preprocess(record, shouldReuse):
     # we are explicitly specified to
     if not is_record_preprocessed(record) or not shouldReuse:
         # Pull out the core words from the article
-        # TODO: use article summarizer
         content = record['content']
-        content_words = [x.lower() for x in content.split(" ")]
-        freq_counts = Counter(content_words).most_common(100)
-        core_words = [x[0] for x in freq_counts]
+        summarized = nlp.summarize("", content)
+        core_words = nlp.top_words(summarized)
         record['core-words'] = core_words
         return True
     else:

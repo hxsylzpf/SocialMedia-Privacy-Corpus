@@ -8,7 +8,7 @@
 """
 import sys
 import glob
-from modules import config, data, helpers, preprocessing
+from modules import config, data, helpers
 
 # If optional parameter "clean" provided, do not reuse existing preprocessing
 shouldReuse = True
@@ -39,13 +39,16 @@ if shouldRemove:
         record = helpers.json_string_to_object(record_json)
 
         # Remove the preprocessing
-        preprocessing.remove_preprocessing(record)
+        record['core-words'] = None
 
         # Write the record back out to its file
         record_json = helpers.json_object_to_string(record)
         data.write_string_to_file(td_file, record_json)
     print("Done!")
     sys.exit()
+
+# Now load preprocessing library (will load NLP models)
+from modules import preprocessing
 
 # Perform preprocessing on each file and write it back out to the file
 print("Preprocessing...")
