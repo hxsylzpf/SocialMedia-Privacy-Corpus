@@ -10,9 +10,10 @@ def get_training_data_record(articleId, classification, content):
     record = {
         'id': articleId,
         'class': classification,
-        'content': content
+        'content': content,
+        'core-words': None
     }
-    record_json = helpers.json_string(record)
+    record_json = helpers.json_object_to_string(record)
     return record_json
 
 # Retrieve the content for each ID and write it out to file

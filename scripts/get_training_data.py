@@ -2,14 +2,14 @@
     get_training_data.py
     Sources the data IDs and moves them into folders
 
-    Use optional parameter "clean" to re-retrieve all API, no reuse.
+    Use optional parameter "update" to re-retrieve all API, no reuse.
 """
 import os
 import sys
 from modules import config, data, helpers, training_data
 
 # If optional parameter "clean" provided, do not reuse existing files
-if len(sys.argv) == 2 and sys.argv[1] == "clean":
+if len(sys.argv) == 2 and sys.argv[1] == "update":
     shouldReuse = False
 else:
     shouldReuse = True

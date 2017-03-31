@@ -5,16 +5,20 @@
 import json
 import hashlib
 
-# Pretty print a JSON string
-def json_print(string):
-    print(json.dumps(string, indent=2))
+# Pretty print a JSON object
+def json_print(obj):
+    print(json.dumps(obj, indent=2))
 
 # Convert json object to string
-def json_string(string, pretty=True):
+def json_object_to_string(obj, pretty=True):
     if pretty:
-        return json.dumps(string, indent=2)
+        return json.dumps(obj, indent=2)
     else:
-        return json.dumps(string)
+        return json.dumps(obj)
+
+# Convert json string to object
+def json_string_to_object(string):
+    return json.loads(string)
 
 # Get MD5 hash
 def md5_hash(string):
