@@ -52,14 +52,16 @@ def get_content_response_for_query(query):
     # get content response
     return content.get_content_response()
 
-# Get body content for an article with ID
-def get_title_body_content(articleId):
+# Get content for an article with ID
+def get_title_body_tags_for_article_id(articleId):
     headers = {
-        "ids": articleId,
-        "show-blocks": "body"
+        "show-blocks": "body",
+        "show-tags": "keyword"
     }
     content = theguardian_content.Content(api=api_key, **headers)
-    res = content.get_results(content.get_content_response())
+    single_id_content = content.find_by_id(articleId)
+    res = content.get_results(single_id_content)
     title = str(res[0]['webTitle'])
     body_text = str(res[0]['blocks']['body'][0]['bodyTextSummary'])
-    return (title, body_text)
+    tags = [x['id'] for x in res[0]['tags']]
+    return (title, body_text, tags)

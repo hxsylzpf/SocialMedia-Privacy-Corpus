@@ -6,12 +6,13 @@ import os
 from . import api, data, helpers
 
 # Write out a training data record to string
-def get_training_data_record(articleId, classification, title, content):
+def get_training_data_record(articleId, classification, title, content, tags):
     record = {
         'id': articleId,
         'class': classification,
         'title': title,
         'content': content,
+        'tags': tags,
         'core-words': None
     }
     record_json = helpers.json_object_to_string(record)
@@ -27,8 +28,8 @@ def get_training_data_files_for_ids(ids, hashes, folder, classification, shouldR
         # (save API calls) unless told otherwise
         filepath = os.path.join(folder, h)
         if not os.path.exists(filepath) or not shouldReuse:
-            title, body_content = api.get_title_body_content(i)
-            record_json = get_training_data_record(i, classification, title, body_content)
+            title, content, tags = api.get_title_body_tags_for_article_id(i)
+            record_json = get_training_data_record(i, classification, title, content, tags)
             data.write_string_to_file(filepath, record_json)
             numRetrieved = numRetrieved + 1
         else:
