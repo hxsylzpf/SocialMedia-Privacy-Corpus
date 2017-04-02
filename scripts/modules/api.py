@@ -52,6 +52,21 @@ def get_content_response_for_query(query):
     # get content response
     return content.get_content_response()
 
+# Get content that corresponds to id query
+def get_content_response_for_multiple_tags_query(tags, pageNum=1):
+    headers = {
+        "tag": tags,
+        "page": pageNum
+    }
+
+    # use this api url to content
+    content = theguardian_content.Content(api=api_key, **headers)
+
+    # get content response
+    res = content.get_content_response()
+    numPages = res['response']['pages']
+    return (numPages, [{ 'id': x['id'], 'title': x['webTitle'],'url': x['webUrl']} for x in res['response']['results']])
+
 # Get body content for an article with ID
 def get_title_body_content(articleId):
     headers = {
