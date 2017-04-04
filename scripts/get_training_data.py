@@ -28,7 +28,7 @@ for folder in (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH):
 # Verify ID files exist
 print("Reading ID files...")
 if not os.path.exists(YES_ID_FILE) or not os.path.exists(NO_ID_FILE):
-    print("Missing ID files! yes.ids and no.ids")
+    print("ERROR: Missing ID files! yes.ids and no.ids")
     sys.exit()
 
 # Read ID files

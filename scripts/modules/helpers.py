@@ -4,6 +4,7 @@
 """
 import json
 import hashlib
+import random
 
 # Pretty print a JSON object
 def json_print(obj):
@@ -23,3 +24,7 @@ def json_string_to_object(string):
 # Get MD5 hash
 def md5_hash(string):
     return hashlib.md5(string.encode('utf-8')).hexdigest()
+
+# Randomly shuffle a list
+def random_shuffle(slist):
+    return random.sample(slist, len(slist))
