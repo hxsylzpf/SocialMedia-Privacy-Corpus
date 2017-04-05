@@ -46,6 +46,11 @@ Find tags for a query.
 
 Parameters: the query (i.e. `python find_tags.py apple`)
 
+##### get_random_articles.py
+Get `n` number of random article IDs from the API.
+
+Parameters: the number of articles to retrieve
+
 ## Modules
 The modules folder contains various files that have useful functions that may be shared across scripts. The scripts tend to wrap these modules.
 
