@@ -31,7 +31,7 @@ Listed below are scripts that can be used for supporting purposes, but aren't ne
 ##### compare_summarizer.py
 Prints out the results of the summarizer on training data to compare to commercially available solutions, or just to see the results.
 
-Parameters: If none, selects a random article. If provided, the hash of the file to compare (optional)
+Parameters: If none, selects a random article and returns the 7 best sentences. Optionally, 1st argument is the number of sentences to return, and optionally, 2nd argument is the hash of the file to compare (optional)
 
 ##### content_from_tags.py
 Prints out content (title and web URL) for a tag query. You can use boolean operators in the tag query.

@@ -16,10 +16,14 @@ all_id_hashes = os.listdir(YES_FOLDER_PATH) + os.listdir(NO_FOLDER_PATH)
 
 # If command line argument is provided, use that as the key. Otherwise use a
 # random hash from the yes/no training data.
-if len(sys.argv) == 2:
-    selected_hash = sys.argv[1]
-else:
-    selected_hash = helpers.random_sample(all_id_hashes)
+n_best = N_BEST
+selected_hash = helpers.random_sample(all_id_hashes)
+if len(sys.argv) == 3:
+    selected_hash = sys.argv[2]
+    n_best = int(sys.argv[1])
+elif len(sys.argv) == 2:
+    n_best = int(sys.argv[1])
+print("Hash = {}".format(selected_hash))
 
 # Open the selected file
 filepath = os.path.join(YES_FOLDER_PATH, selected_hash)
@@ -29,8 +33,8 @@ with open(filepath, 'r') as f:
     record = helpers.json_string_to_object(f.read().strip())
 
 # Summarize the article using our summarizer
-best_sentences = nlp.summarize(record['title'], record['content'], N_BEST)
+best_sentences = nlp.summarize(record['title'], record['content'], n_best)
 
 # Print out the results
 for i, s in enumerate(best_sentences.split('\n')):
-    print("{}: {}".format(i, s))
+    print("{}: {}".format(i + 1, s))
