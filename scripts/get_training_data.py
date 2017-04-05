@@ -51,9 +51,10 @@ for f in os.listdir(NO_FOLDER_PATH):
         data.delete_file(os.path.join(NO_FOLDER_PATH, f))
 
 # Retrieve the content for each ID and write it out to file
-print("Retrieving data...")
-(yesRetrieved, yesCached) = training_data.get_training_data_files_for_ids(yes_ids, yes_hashes, YES_FOLDER_PATH, True, shouldReuse)
-(noRetrieved, noCached) = training_data.get_training_data_files_for_ids(no_ids, no_hashes, NO_FOLDER_PATH, False, shouldReuse)
+print("Retrieving yes data...")
+(yesRetrieved, yesCached) = training_data.get_training_data_files_for_ids(yes_ids, yes_hashes, YES_FOLDER_PATH, True, shouldReuse, True)
+print("Retrieving no data...")
+(noRetrieved, noCached) = training_data.get_training_data_files_for_ids(no_ids, no_hashes, NO_FOLDER_PATH, False, shouldReuse, True)
 
 # Print out statistics
 print("Done!")
