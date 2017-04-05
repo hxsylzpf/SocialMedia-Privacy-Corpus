@@ -3,6 +3,7 @@
     Responsible for all training data related stuff
 """
 import os
+import sys
 from . import api, data, helpers
 
 # Write out a training data record to string
@@ -19,11 +20,15 @@ def get_training_data_record(articleId, classification, title, content, tags):
     return record_json
 
 # Retrieve the content for each ID and write it out to file
-def get_training_data_files_for_ids(ids, hashes, folder, classification, shouldReuse):
+def get_training_data_files_for_ids(ids, hashes, folder, classification, shouldReuse=True, progress=False):
     # Statistics
     numRetrieved = 0
     numCached = 0
-    for i, h in zip(ids, hashes):
+    for index, (i, h) in enumerate(zip(ids, hashes)):
+        # Print out progress is flag set
+        if progress:
+            sys.stdout.write("\r{}/{}".format(index + 1, len(ids)))
+            sys.stdout.flush()
         # Only retrieve and write out if the file does not exist already
         # (save API calls) unless told otherwise
         filepath = os.path.join(folder, h)
@@ -34,4 +39,7 @@ def get_training_data_files_for_ids(ids, hashes, folder, classification, shouldR
             numRetrieved = numRetrieved + 1
         else:
             numCached = numCached + 1
+    if progress:
+        sys.stdout.write("\n")
+        sys.stdout.flush()
     return (numRetrieved, numCached)
