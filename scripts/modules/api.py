@@ -52,6 +52,15 @@ def get_content_response_for_query(query):
     # get content response
     return content.get_content_response()
 
+# Get all content
+def get_content_response_for_page(pageNum=1):
+    headers = {
+        "page": pageNum
+    }
+
+    # get content response
+    return get_content_response(headers)
+
 # Get content that corresponds to id query
 def get_content_response_for_multiple_tags_query(tags, pageNum=1):
     headers = {
@@ -59,11 +68,8 @@ def get_content_response_for_multiple_tags_query(tags, pageNum=1):
         "page": pageNum
     }
 
-    # use this api url to content
-    content = theguardian_content.Content(api=api_key, **headers)
+    res = get_content_response(headers)
 
-    # get content response
-    res = content.get_content_response()
     numPages = res['response']['pages']
     return (numPages, [{ 'id': x['id'], 'title': x['webTitle'],'url': x['webUrl']} for x in res['response']['results']])
 
@@ -80,3 +86,8 @@ def get_title_body_tags_for_article_id(articleId):
     body_text = str(helpers.sanitize(res[0]['blocks']['body'][0]['bodyTextSummary']))
     tags = [x['id'] for x in res[0]['tags']]
     return (title, body_text, tags)
+
+# Get content that corresponds to headers
+def get_content_response(headers):
+    content = theguardian_content.Content(api=api_key,  **headers)
+    return content.get_content_response()
