@@ -5,7 +5,7 @@
 import os
 import sys
 
-from . import config
+from . import config, helpers
 config.set_import_paths()
 api_key = config.get_api_key()
 
@@ -76,7 +76,7 @@ def get_title_body_tags_for_article_id(articleId):
     content = theguardian_content.Content(api=api_key, **headers)
     single_id_content = content.find_by_id(articleId)
     res = content.get_results(single_id_content)
-    title = str(res[0]['webTitle'])
-    body_text = str(res[0]['blocks']['body'][0]['bodyTextSummary'])
+    title = str(helpers.sanitize(res[0]['webTitle']))
+    body_text = str(helpers.sanitize(res[0]['blocks']['body'][0]['bodyTextSummary']))
     tags = [x['id'] for x in res[0]['tags']]
     return (title, body_text, tags)

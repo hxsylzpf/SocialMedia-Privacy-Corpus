@@ -28,3 +28,15 @@ def md5_hash(string):
 # Randomly shuffle a list
 def random_shuffle(slist):
     return random.sample(slist, len(slist))
+
+# Get a random sample from a list
+def random_sample(slist):
+    return random.choice(slist)
+
+# Filters out puncutation that may break the NLP processing
+def remove_bad_puncutation(text):
+    return text.replace('‘', '\'').replace('’', '\'').replace('“', '\"').replace('”', '\"')
+
+# Santizes text for our application
+def sanitize(text):
+    return remove_bad_puncutation(text)

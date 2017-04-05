@@ -21,19 +21,13 @@ if len(sys.argv) == 2:
         sys.exit()
 
 # Open ID files
-(TRAINING_DATA_PATH, YES_ID_FILE, NO_ID_FILE) = config.get_training_data_id_file_paths()
-print("Reading ID files...")
-if not os.path.exists(YES_ID_FILE) or not os.path.exists(NO_ID_FILE):
-    print("ERROR: Missing ID files! yes.ids and no.ids")
+(DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH) = config.get_training_data_folder_paths()
+print("Looking for downloaded training data...")
+if not os.path.exists(YES_FOLDER_PATH) or not os.path.exists(NO_FOLDER_PATH):
+    print("ERROR: Missing training data files! Run download script first.")
     sys.exit()
-with open(YES_ID_FILE, 'r') as f:
-    yes_ids = [x.strip() for x in f.readlines()]
-with open(NO_ID_FILE, 'r') as f:
-    no_ids = [x.strip() for x in f.readlines()]
-
-# Convert IDs to hashes. We will store hashes in the split.
-yes_hashes = [helpers.md5_hash(i) for i in yes_ids]
-no_hashes = [helpers.md5_hash(i) for i in no_ids]
+yes_hashes = os.listdir(YES_FOLDER_PATH)
+no_hashes = os.listdir(NO_FOLDER_PATH)
 
 # Shuffle the yes and no lists to allow for random sampling
 print("Randomly sampling the IDs...")
@@ -42,12 +36,12 @@ no_hashes_shuffled = helpers.random_shuffle(no_hashes)
 
 # Split each list into the correct percentages
 print("Splitting the IDs into a {}/{} split...".format(training_split, 100 - training_split))
-yes_split = (training_split / 100.0) * len(yes_hashes_shuffled)
-yes_hashes_training = yes_hashes_shuffled[yes_split:]
-yes_hashes_validation = yes_hashes_shuffled[:yes_split]
-no_split = (training_split / 100.0) * len(no_hashes_shuffled)
-no_hashes_training = no_hashes_shuffled[no_split:]
-no_hashes_validation = no_hashes_shuffled[:no_split]
+yes_split = int((training_split / 100.0) * len(yes_hashes_shuffled))
+yes_hashes_training = yes_hashes_shuffled[:yes_split]
+yes_hashes_validation = yes_hashes_shuffled[yes_split:]
+no_split = int((training_split / 100.0) * len(no_hashes_shuffled))
+no_hashes_training = no_hashes_shuffled[:no_split]
+no_hashes_validation = no_hashes_shuffled[no_split:]
 
 # Write them out to files
 print("Writing out splits to files...")

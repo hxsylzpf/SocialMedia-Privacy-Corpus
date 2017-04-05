@@ -15,7 +15,10 @@ nlp = spacy.load('en')
 
 # Download nltk if necessary
 print("Downloading nltk (if necessary)...")
-nltk.download("stopwords")
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download("stopwords")
 
 # A custom stoplist
 STOPLIST = set(nltk.corpus.stopwords.words('english') + ["n't", "'s", "'m", "ca", "’s", "n’t"])
