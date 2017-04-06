@@ -54,7 +54,11 @@ from modules import preprocessing
 print("Preprocessing...")
 totalPreprocessed = 0
 totalReused = 0
-for td_file in training_data:
+for i, td_file in enumerate(training_data):
+    # Print progress
+    sys.stdout.write("\r{}/{}".format(i + 1, len(training_data)))
+    sys.stdout.flush()
+
     # Convert json string in file to object
     with open(td_file, 'r') as f:
         record_json = f.read().strip()
@@ -71,6 +75,6 @@ for td_file in training_data:
         totalReused += 1
 
 # Print out statistics
-print("Done!")
+print("\nDone!")
 print("  Preprocessed {} files".format(totalPreprocessed))
 print("  Reused {} existing results".format(totalReused))

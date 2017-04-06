@@ -26,6 +26,10 @@ STOPLIST = set(nltk.corpus.stopwords.words('english') + ["n't", "'s", "'m", "ca"
 # List of symbols we don't care about
 SYMBOLS = " ".join(string.punctuation).split(" ") + ["-----", "---", "...", "“", "”", "'ve", "’"]
 
+# Indicates whether a token is valid
+def is_valid_token(t):
+    return t.ent_type == 0 and not t.is_stop and not t.is_punct and not t.is_space and not t.like_num
+
 # Summarize an article by returning a list of the n best sentences
 def summarize(title, text, nLargest=10):
     # Process
@@ -35,7 +39,7 @@ def summarize(title, text, nLargest=10):
     # Extract unique tokens from the document.
     # Filter out stop words, puncutation, and whitespace. If a word is part of a
     # named entity, consider the entire entity, not the individual words.
-    tokens = [str(t.lemma_).lower() for t in doc if t.ent_type == 0 and not t.is_stop and not t.is_punct and t.is_space] + [str(e.lemma_).lower() for e in doc.ents]
+    tokens = [str(t.lemma_).lower() for t in doc if is_valid_token(t)] + [str(e.lemma_).lower() for e in doc.ents]
 
     # additional filtering of stopwords and puncutation that spacy didn't catch
     tokens = [t for t in tokens if t not in STOPLIST]
@@ -49,11 +53,11 @@ def summarize(title, text, nLargest=10):
 
     # Score the sentences
     sentence_scores = {}
-    title_lemmas = [str(w.lemma_).lower() for w in title_doc if w.ent_type == 0 and not w.is_stop and not w.is_punct and w.is_space] + [str(e.lemma_).lower() for e in title_doc.ents]
+    title_lemmas = [str(t.lemma_).lower() for t in title_doc if is_valid_token(t)] + [str(e.lemma_).lower() for e in title_doc.ents]
     for i, sent in enumerate(doc.sents):
         score = 0
         sent_doc = nlp(sent.text)
-        sent_tokens = [str(t.lemma_).lower() for t in sent_doc if t.ent_type == 0] + [str(e.lemma_).lower() for e in sent_doc.ents]
+        sent_tokens = [str(t.lemma_).lower() for t in sent_doc if is_valid_token(t)] + [str(e.lemma_).lower() for e in sent_doc.ents]
         for token in sent_tokens:
             # tf --> Use raw relative frequencies
             tf = lemma_counts[token] / float(sum(lemma_counts.values()))

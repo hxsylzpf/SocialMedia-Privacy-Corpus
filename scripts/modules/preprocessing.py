@@ -22,7 +22,6 @@ def preprocess(record, shouldReuse):
         summarized = nlp.summarize(title, content)
         core_words = nlp.top_words(summarized)
         record['core-words'] = core_words
-        print(core_words)
         return True
     else:
         return False
