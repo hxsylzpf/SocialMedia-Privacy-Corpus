@@ -5,7 +5,7 @@ from modules import api, helpers
 # Command line argument is the page number
 if len(sys.argv) != 2:
     print("Usage: get_random_articles.py [numRandomArticles]")
-    sys.exit()
+    sys.exit(1)
 
 numRandomArticles = int(sys.argv[1])
 print(numRandomArticles)

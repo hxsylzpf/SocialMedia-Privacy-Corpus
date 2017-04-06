@@ -18,14 +18,14 @@ if len(sys.argv) == 2:
         training_split = temp
     else:
         print("Usage: divide_training_data.py [training split percentage]")
-        sys.exit()
+        sys.exit(1)
 
 # Open ID files
 (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH) = config.get_training_data_folder_paths()
 print("Looking for downloaded training data...")
 if not os.path.exists(YES_FOLDER_PATH) or not os.path.exists(NO_FOLDER_PATH):
     print("ERROR: Missing training data files! Run download script first.")
-    sys.exit()
+    sys.exit(1)
 yes_hashes = os.listdir(YES_FOLDER_PATH)
 no_hashes = os.listdir(NO_FOLDER_PATH)
 

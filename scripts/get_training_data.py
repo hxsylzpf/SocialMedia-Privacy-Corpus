@@ -29,7 +29,7 @@ for folder in (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH):
 print("Reading ID files...")
 if not os.path.exists(YES_ID_FILE) or not os.path.exists(NO_ID_FILE):
     print("ERROR: Missing ID files! yes.ids and no.ids")
-    sys.exit()
+    sys.exit(1)
 
 # Read ID files
 with open(YES_ID_FILE, 'r') as f:
@@ -59,7 +59,7 @@ try:
     (noRetrieved, noCached) = training_data.get_training_data_files_for_ids(no_ids, no_hashes, NO_FOLDER_PATH, False, shouldReuse, True)
 except:
     print("\nERROR: Invalid id in ID file - see above index. Perhaps the ID leads to a video or image?")
-    sys.exit()
+    sys.exit(1)
 
 # Print out statistics
 print("Done!")

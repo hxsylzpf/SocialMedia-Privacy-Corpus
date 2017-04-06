@@ -20,7 +20,7 @@ if len(sys.argv) == 2:
         shouldRemove = True
     else:
         print("ERROR: Invalid argument specified")
-        sys.exit()
+        sys.exit(1)
 
 # Data folders - should already exist
 (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH) = config.get_training_data_folder_paths()
@@ -45,7 +45,7 @@ if shouldRemove:
         record_json = helpers.json_object_to_string(record)
         data.write_string_to_file(td_file, record_json)
     print("Done!")
-    sys.exit()
+    sys.exit(0)
 
 # Now load preprocessing library (will load NLP models)
 from modules import preprocessing
