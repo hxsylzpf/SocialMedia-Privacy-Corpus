@@ -78,7 +78,7 @@ def top_words(text, n=None):
     doc = nlp(text)
 
      # lemmatize
-    tokens = [str(t.lemma_).lower() for t in doc if not t.is_stop and not t.is_punct and not t.is_space]
+    tokens = [str(t.lemma_).lower() for t in doc if is_valid_token(t)]
 
     # additional filtering of stopwords and puncutation that spacy didn't catch
     tokens = [t for t in tokens if t not in STOPLIST]
