@@ -38,6 +38,11 @@ classifier_factory.set_training_data(training_data)
 # Build classifier
 classifier = classifier_factory.build_classifier(CLASSIFY_WITH_WORDS, CLASSIFY_WITH_TAGS)
 
+# Write out classifier factory to file
+filepath = config.get_classifier_pickle_file_path("naive_bayes")
+print("Writing classifier out to file {}...".format(filepath))
+classifier_factory.write_classifier_to_file(filepath)
+
 # Print out statistics
 print("Done!\n")
 print("Statistics:")

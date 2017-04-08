@@ -4,6 +4,7 @@
 """
 import abc
 import nltk
+import pickle
 from collections import Counter
 
 # Superclass for all classifier factory types
@@ -105,11 +106,20 @@ class PrivacyClassifierFactory:
 
 # Naive-Bayes Classifier
 class NaiveBayesPrivacyClassifierFactory(PrivacyClassifierFactory):
-    def __init__(self):
-        # TODO: read from pickle file if specified
-        pass
+    # Load classifier from pickle file if provided
+    def __init__(self, pickle_file=None):
+        if pickle_file is not None:
+            with open(pickle_file, 'rb') as model:
+                self.classifier = pickle.load(model)
+        else:
+            super().__init__()
 
     # Given features, build the actual classifier
     def build_classifier_from_features(self, feature_sets):
         self.classifier = nltk.NaiveBayesClassifier.train(feature_sets)
         return self.classifier
+
+    # Write out to file
+    def write_classifier_to_file(self, filepath):
+        with open(filepath, 'wb') as pickle_file:
+            pickle.dump(self.classifier, pickle_file)

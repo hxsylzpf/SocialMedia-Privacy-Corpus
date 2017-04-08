@@ -51,3 +51,8 @@ def get_training_data_splits_paths():
     training_data_ids = os.path.join(data_folder_path, "training.set")
     validation_data_ids = os.path.join(data_folder_path, "validation.set")
     return (training_data_ids, validation_data_ids)
+
+# Get filepath for the classifier pickle
+def get_classifier_pickle_file_path(classifier_name="classifier"):
+    data_folder_path = get_data_folder_base_path()
+    return os.path.join(data_folder_path, classifier_name + ".pkl")
