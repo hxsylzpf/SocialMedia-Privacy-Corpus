@@ -15,9 +15,17 @@ class PrivacyClassifierFactory:
         self.word_features = None
         self.tag_features = None
 
-    # Returns the constructed classifier
-    def get_classifier(self):
+    # Returns the constructed classifier, or loads it from a file
+    def get_classifier(self, pickle_file):
+        if pickle_file is not None:
+            with open(pickle_file, 'rb') as model:
+                self.classifier = pickle.load(model)
         return self.classifier
+
+    # Write out classifier to file
+    def write_classifier_to_file(self, filepath):
+        with open(filepath, 'wb') as pickle_file:
+            pickle.dump(self.classifier, pickle_file)
 
     # Set the classifier's training data
     def set_training_data(self, training_data):
@@ -107,19 +115,10 @@ class PrivacyClassifierFactory:
 # Naive-Bayes Classifier
 class NaiveBayesPrivacyClassifierFactory(PrivacyClassifierFactory):
     # Load classifier from pickle file if provided
-    def __init__(self, pickle_file=None):
-        if pickle_file is not None:
-            with open(pickle_file, 'rb') as model:
-                self.classifier = pickle.load(model)
-        else:
-            super().__init__()
+    def __init__(self):
+        super().__init__()
 
     # Given features, build the actual classifier
     def build_classifier_from_features(self, feature_sets):
         self.classifier = nltk.NaiveBayesClassifier.train(feature_sets)
         return self.classifier
-
-    # Write out to file
-    def write_classifier_to_file(self, filepath):
-        with open(filepath, 'wb') as pickle_file:
-            pickle.dump(self.classifier, pickle_file)

@@ -43,6 +43,12 @@ filepath = config.get_classifier_pickle_file_path("naive_bayes")
 print("Writing classifier out to file {}...".format(filepath))
 classifier_factory.write_classifier_to_file(filepath)
 
+# Verify file write out
+written_out_classifier = classifier_factory.get_classifier(filepath)
+if written_out_classifier.most_informative_features(5) != classifier.most_informative_features(5):
+    print("ERROR: Written out classifier does not match constructed")
+    sys.exit(1)
+
 # Print out statistics
 print("Done!\n")
 print("Statistics:")
