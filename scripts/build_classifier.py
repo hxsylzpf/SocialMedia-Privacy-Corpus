@@ -9,6 +9,9 @@ import glob
 from modules import config, helpers
 from modules.classifier import NaiveBayesPrivacyClassifierFactory
 
+CLASSIFY_WITH_WORDS = True
+CLASSIFY_WITH_TAGS = True
+
 # Get all downloaded training data paths
 (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH) = config.get_training_data_folder_paths()
 print("Looking for downloaded training data...")
@@ -33,7 +36,7 @@ classifier_factory = NaiveBayesPrivacyClassifierFactory()
 classifier_factory.set_training_data(training_data)
 
 # Build classifier
-classifier = classifier_factory.build_classifier()
+classifier = classifier_factory.build_classifier(CLASSIFY_WITH_WORDS, CLASSIFY_WITH_TAGS)
 
 # Print out statistics
 print("Done!\n")
