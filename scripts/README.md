@@ -20,11 +20,6 @@ Performs various preprocessing steps on the training data downloaded previously.
 
 Parameters: If none provided, this will only pre-process data that has not been pre-processed. If `update` provided, this will re-pre-process all data. If `remove` provided, this will simply delete all existing pre-process data, but leave the actual training data intact.
 
-##### divide_training_data.py
-Divides the training data into training and cross-validation sets. Creates a new random sampling each run.
-
-Parameters: None
-
 ### Support functionality
 Listed below are scripts that can be used for supporting purposes, but aren't needed for core functionality.
 
