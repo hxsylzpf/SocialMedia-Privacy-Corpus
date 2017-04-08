@@ -6,11 +6,8 @@
 import os
 import sys
 import glob
-from collections import Counter
 from modules import config, helpers
-
-# Download nltk if necessary
-import nltk
+from modules.classifier import NaiveBayesPrivacyClassifierFactory
 
 # Get all downloaded training data paths
 (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH) = config.get_training_data_folder_paths()
@@ -21,38 +18,34 @@ if not os.path.exists(YES_FOLDER_PATH) or not os.path.exists(NO_FOLDER_PATH):
 training_data_files = glob.glob(YES_FOLDER_PATH + "/*") + glob.glob(NO_FOLDER_PATH + "/*")
 
 # Read all of the training data in and parse them into objects
+print("Parsing training data...")
 training_data = []
 for fp in training_data_files:
     with open(fp, 'r') as f:
         record = helpers.json_string_to_object(f.read().strip())
         training_data.append(record)
 
-# Pull all words from the core words across all training data records
-all_words = [x for record in training_data for x in record['core-words']]
+# Get a Naive-Bayes Classifier factory object to build the classifier
+print("Building classifier...")
+classifier_factory = NaiveBayesPrivacyClassifierFactory()
 
-# Create a frequency distribution of all the words
-words_freqdist = Counter(all_words)
+# Add training data to classifier
+classifier_factory.set_training_data(training_data)
 
-# Construct features
-training_data_features = []
-for record in training_data:
-    # Convert to a set as searching a set is faster (hashed)
-    core_words = set(record['core-words'])
-
-    # Construct features
-    features = {}
-    for word in words_freqdist:
-        features["contains({})".format(word)] = (word in core_words)
-    training_data_features.append(features)
-
-# Train the N-B classifier
-featuresets = [(feature, category) for feature, category in zip(training_data_features, [x['class'] for x in training_data])]
-classifier = nltk.NaiveBayesClassifier.train(featuresets)
-classifier.show_most_informative_features(10)
+# Build classifier
+classifier = classifier_factory.build_classifier()
 
 # Print out statistics
+print("Done!\n")
 print("Statistics:")
 print("    Total of {} examples".format(len(training_data)))
-print("    Total of {} words".format(len(all_words)))
-print("    Total of {} unique words".format(len(words_freqdist)))
-print("    Top 10 words are: {}".format([w for w, wc in words_freqdist.most_common(10)]))
+print("    Total of {} words".format(len(classifier_factory.get_all_training_data_words())))
+print("    Total of {} unique words".format(len(classifier_factory.get_all_unique_training_data_words())))
+print("    Top 10 words are: {}".format([w for w, wc in classifier_factory.get_n_most_common_training_data_words(10)]))
+print("    Total of {} tags".format(len(classifier_factory.get_all_training_data_tags())))
+print("    Total of {} unique tags".format(len(classifier_factory.get_all_unique_training_data_tags())))
+print("    Top 10 tags are: {}".format([w for w, wc in classifier_factory.get_n_most_common_training_data_tags(10)]))
+print()
+
+# Print out classifier information
+classifier.show_most_informative_features(10)
