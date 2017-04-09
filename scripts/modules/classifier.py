@@ -137,11 +137,36 @@ class PrivacyClassifierFactory:
         # Call the subclass abstract method
         return self.compute_metrics_from_test_features(feature_sets)
 
-    # Abstract class method to compute the metrics of a classifier on test
-    # features. Should return a PrivacyClassifierMetrics object.
-    @abc.abstractmethod
+    # Given test features, compute metrics
     def compute_metrics_from_test_features(self, test_features):
-        raise NotImplementedError("Compute metrics from test features method not implemented")
+        # Pull out the features and labels from the test_features
+        features_only = [features for features, category in test_features]
+        true_classifications = [category for features, category in test_features]
+
+        # Run the classifier on the test data
+        test_classifications = [self.classify_from_test_features(f) for f in features_only]
+
+        # Combine test classification and ground truth classification
+        results = list(zip(true_classifications, test_classifications))
+
+        # Compute true/false positive and true/false negative values
+        tp = sum(1 for true, test in results if true == True and test == True)
+        fp = sum(1 for true, test in results if true == False and test == True)
+        tn = sum(1 for true, test in results if true == False and test == False)
+        fn = sum(1 for true, test in results if true == True and test == False)
+
+        # Compute metrics
+        metrics = PrivacyClassifierMetrics()
+        metrics.accuracy = (tp + tn) / (tp + tn + fp + fn)
+        metrics.precision = tp / (tp + fp)
+        metrics.recall = tp / (tp + fn)
+        metrics.fmeasure = (2 * tp) / ((2 * tp) + fp + fn)
+        return metrics
+
+    # Abstract class method to perform classification of the classifier
+    @abc.abstractmethod
+    def classify_from_test_features(self, test_features):
+        raise NotImplementedError("Classify from test features method not implemented")
 
     # Perform an n-fold cross-validation test on the classifier
     # Returns a PrivacyClassifierMetrics object that contains the average.
@@ -181,31 +206,9 @@ class NaiveBayesPrivacyClassifierFactory(PrivacyClassifierFactory):
         self.classifier = nltk.NaiveBayesClassifier.train(feature_sets)
         return self.classifier
 
-    # Given test features, compute metrics
-    def compute_metrics_from_test_features(self, test_features):
-        # Pull out the features and labels from the test_features
-        features_only = [features for features, category in test_features]
-        true_classifications = [category for features, category in test_features]
-
-        # Run the classifier on the test data
-        test_classifications = [self.classifier.classify(f) for f in features_only]
-
-        # Combine test classification and ground truth classification
-        results = list(zip(true_classifications, test_classifications))
-
-        # Compute true/false positive and true/false negative values
-        tp = sum(1 for true, test in results if true == True and test == True)
-        fp = sum(1 for true, test in results if true == False and test == True)
-        tn = sum(1 for true, test in results if true == False and test == False)
-        fn = sum(1 for true, test in results if true == True and test == False)
-
-        # Compute metrics
-        metrics = PrivacyClassifierMetrics()
-        metrics.accuracy = (tp + tn) / (tp + tn + fp + fn)
-        metrics.precision = tp / (tp + fp)
-        metrics.recall = tp / (tp + fn)
-        metrics.fmeasure = (2 * tp) / ((2 * tp) + fp + fn)
-        return metrics
+    # Given test features, cdetermine the classification
+    def classify_from_test_features(self, test_features):
+        return self.classifier.classify(test_features)
 
 # Classifier metrics
 class PrivacyClassifierMetrics(object):
