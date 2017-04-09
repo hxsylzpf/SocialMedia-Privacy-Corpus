@@ -33,8 +33,8 @@ def create_feature_sets(records, word_features=None, tag_features=None):
 
 # Superclass for all classifier factory types
 class PrivacyClassifierFactory:
-    def __init__(self, useWords=True, useTags=True):
-        self.useWords = useWords
+    def __init__(self, useCoreWords=True, useTags=True):
+        self.useCoreWords = useCoreWords
         self.useTags = useTags
         self.training_data = None
         self.classifier = None
@@ -57,21 +57,25 @@ class PrivacyClassifierFactory:
     def set_training_data(self, training_data):
         self.training_data = training_data
 
-    # Get all words from the core words across all training data records
-    def get_all_training_data_words(self):
-        return [x for record in self.training_data for x in record['core-words']]
+    # Get all words from the core or unique words across all training data records
+    def get_all_training_data_words(self, coreWords=True):
+        if coreWords:
+            return [x for record in self.training_data for x in record['core-words']]
+        else:
+            # TODO
+            raise NotImplementedError("Non-core words not implemented yet")
 
     # Get a count of each word in the training_data
-    def get_training_data_word_counter(self):
-        return Counter(self.get_all_training_data_words())
+    def get_training_data_word_counter(self, coreWords=True):
+        return Counter(self.get_all_training_data_words(coreWords))
 
     # Get all UNIQUE words from the core words across all training data records
-    def get_all_unique_training_data_words(self):
-        return list(self.get_training_data_word_counter())
+    def get_all_unique_training_data_words(self, coreWords=True):
+        return list(self.get_training_data_word_counter(coreWords))
 
     # Get the n most common words in the training data
-    def get_n_most_common_training_data_words(self, n):
-        return self.get_training_data_word_counter().most_common(n)
+    def get_n_most_common_training_data_words(self, n, coreWords=True):
+        return [w for w, wc in self.get_training_data_word_counter(coreWords).most_common(n)]
 
     # Get all tags across all training data records
     def get_all_training_data_tags(self):
@@ -87,13 +91,14 @@ class PrivacyClassifierFactory:
 
     # Get the n most common tags in the training data
     def get_n_most_common_training_data_tags(self, n):
-        return self.get_training_data_tag_counter().most_common(n)
+        return [t for t, tc in self.get_training_data_tag_counter().most_common(n)]
 
     # Create feature sets for a list of records
-    def create_feature_sets(self, records):
+    def create_feature_sets(self, records, limit=None):
         # Pull all the unique words/tags in the training data records if requested
-        if self.useWords:
-            self.word_features = self.get_all_unique_training_data_words()
+        if self.useCoreWords:
+            # Limit by word limit if provided
+            self.word_features = self.get_n_most_common_training_data_words(limit)
         else:
             self.word_features = None
         if self.useTags:
@@ -184,7 +189,7 @@ class PrivacyClassifierFactory:
             train_data = [record for fold in train_folds for record in fold]
 
             # Create a classifier with this training data
-            classifier_factory = self.__class__(useWords=self.useWords,
+            classifier_factory = self.__class__(useCoreWords=self.useCoreWords,
                                                 useTags=self.useTags)
             classifier_factory.set_training_data(train_data)
             classifier = classifier_factory.build_classifier()

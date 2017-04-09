@@ -11,7 +11,7 @@ from modules import config, helpers
 
 # List of classifiers to test - should have an appropriate factory
 classifers = [
-    # Classifier Name            UseWords UseTags
+    # Classifier Name         UseCoreWords UseTags
     ("NaiveBayesPrivacyClassifier", True, True),
     ("NaiveBayesPrivacyClassifier", False, True),
     ("NaiveBayesPrivacyClassifier", True, False),
@@ -56,7 +56,7 @@ for classifier in classifers:
     # Get classifier factory
     classifier_factory_classname = "{}Factory".format(classifier[0])
     classifier_factory_class = getattr(sys.modules[__name__], classifier_factory_classname)
-    classifier_factory = classifier_factory_class(useWords=classifier[1],
+    classifier_factory = classifier_factory_class(useCoreWords=classifier[1],
                                                   useTags=classifier[2])
     classifier_factory.set_training_data(training_data)
 
