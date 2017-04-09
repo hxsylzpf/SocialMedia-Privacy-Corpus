@@ -20,6 +20,11 @@ Performs various preprocessing steps on the training data downloaded previously.
 
 Parameters: If none provided, this will only pre-process data that has not been pre-processed. If `update` provided, this will re-pre-process all data. If `remove` provided, this will simply delete all existing pre-process data, but leave the actual training data intact.
 
+##### validate_classifer.py
+Performs n-fold cross-validation on the classifier with the training data.
+
+Parameters: The number of folds to use
+
 ### Support functionality
 Listed below are scripts that can be used for supporting purposes, but aren't needed for core functionality.
 
