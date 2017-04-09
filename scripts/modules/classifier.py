@@ -263,3 +263,45 @@ class KeywordPrivacyClassifier():
             if count == 0:
                 return False
         return True
+
+""" Tag """
+# Tag classifier factory
+class TagPrivacyClassifierFactory(PrivacyClassifierFactory):
+    # Given features, build the actual classifier
+    def build_classifier_from_features(self, feature_sets):
+        self.classifier = TagPrivacyClassifier()
+        return self.classifier
+
+    # Override to change what the features are for this classifier
+    def compute_metrics_from_test_data(self, test_data):
+        # Feature sets are just the content
+        feature_sets = [(x['tags'], x['class']) for x in test_data]
+
+        # Call the subclass abstract method
+        return self.compute_metrics_from_test_features(feature_sets)
+
+    # Given test features, determine the classification
+    def classify_from_test_features(self, tags):
+        return self.classifier.classify(tags)
+
+# Tag classifier
+class TagPrivacyClassifier():
+    privacy_tags = ["world/privacy", "info/privacy", "media/privacy",
+    "technology/data-protection", "technology/hacking"]
+
+    # Names of social medias
+    social_media_tags = ["technology/facebook", "technology/snapchat",
+        "technology/twitter", "technology/instagram", "technology/linkedin",
+        "technology/reddit", "technology/whatsapp", "technology/google-plus",
+        "technology/myspace", "technology/tumblr", "technology/pinterest",
+        "media/social-media", "media/socialnetworking"]
+
+    # Tags to look for. Each list is an OR, the list of lists is an AND.
+    tags = [privacy_tags, social_media_tags]
+
+    def classify(self, tags):
+        for tag_list in self.tags:
+            count = sum(1 for tag in tag_list if tag in tags)
+            if count == 0:
+                return False
+        return True

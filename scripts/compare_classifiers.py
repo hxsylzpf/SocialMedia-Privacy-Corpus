@@ -15,7 +15,8 @@ classifers = [
     ("NaiveBayesPrivacyClassifier", True, True),
     ("NaiveBayesPrivacyClassifier", False, True),
     ("NaiveBayesPrivacyClassifier", True, False),
-    ("KeywordPrivacyClassifier", None, None)
+    ("KeywordPrivacyClassifier", None, None),
+    ("TagPrivacyClassifier", None, None)
 ]
 
 # Random seed to ensure comparability across classifiers
