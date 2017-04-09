@@ -40,3 +40,12 @@ def remove_bad_puncutation(text):
 # Santizes text for our application
 def sanitize(text):
     return remove_bad_puncutation(text)
+
+# Splits a list into N equal parts:
+def split(a, n):
+    k, m = divmod(len(a), n)
+    return list((a[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n)))
+
+# Compute the average of a list
+def average(alist):
+    return sum(alist) / len(alist)
