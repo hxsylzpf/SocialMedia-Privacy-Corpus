@@ -33,7 +33,9 @@ def create_feature_sets(records, word_features=None, tag_features=None):
 
 # Superclass for all classifier factory types
 class PrivacyClassifierFactory:
-    def __init__(self):
+    def __init__(self, useWords=True, useTags=True):
+        self.useWords = useWords
+        self.useTags = useTags
         self.training_data = None
         self.classifier = None
         self.word_features = None
@@ -89,16 +91,21 @@ class PrivacyClassifierFactory:
 
     # Create feature sets for a list of records
     def create_feature_sets(self, records):
+        # Pull all the unique words/tags in the training data records if requested
+        if self.useWords:
+            self.word_features = self.get_all_unique_training_data_words()
+        else:
+            self.word_features = None
+        if self.useTags:
+            self.tag_features = self.get_all_unique_training_data_tags()
+        else:
+            self.tag_features = None
         return create_feature_sets(records, self.word_features, self.tag_features)
 
     # Generic method of building classifier. Includes getting the feature sets
     # and calling an abstract method for building the classifier depending
     # on the classifier type.
-    def build_classifier(self, useWords=True, useTags=True):
-        # Pull all the unique words/tags in the training data records
-        self.word_features = self.get_all_unique_training_data_words()
-        self.tag_features = self.get_all_unique_training_data_tags()
-
+    def build_classifier(self):
         # Create feature sets for each record in training data
         feature_sets = self.create_feature_sets(self.training_data)
 
@@ -169,10 +176,6 @@ class PrivacyClassifierFactory:
 
 # Naive-Bayes Classifier factory
 class NaiveBayesPrivacyClassifierFactory(PrivacyClassifierFactory):
-    # Load classifier from pickle file if provided
-    def __init__(self):
-        super().__init__()
-
     # Given features, build the actual classifier
     def build_classifier_from_features(self, feature_sets):
         self.classifier = nltk.NaiveBayesClassifier.train(feature_sets)

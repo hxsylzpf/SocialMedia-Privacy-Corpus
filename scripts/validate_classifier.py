@@ -35,7 +35,8 @@ for fp in training_data_files:
 
 # Get a Naive-Bayes Classifier factory object to setup the classifier for validation
 print("Setting up classifier...")
-classifier_factory = NaiveBayesPrivacyClassifierFactory()
+classifier_factory = NaiveBayesPrivacyClassifierFactory(useWords=CLASSIFY_WITH_WORDS,
+                                                        useTags=CLASSIFY_WITH_TAGS)
 classifier_factory.set_training_data(training_data)
 
 # Perform cross-validation

@@ -30,13 +30,14 @@ for fp in training_data_files:
 
 # Get a Naive-Bayes Classifier factory object to build the classifier
 print("Building classifier...")
-classifier_factory = NaiveBayesPrivacyClassifierFactory()
+classifier_factory = NaiveBayesPrivacyClassifierFactory(useWords=CLASSIFY_WITH_WORDS,
+                                                        useTags=CLASSIFY_WITH_TAGS)
 
 # Add training data to classifier
 classifier_factory.set_training_data(training_data)
 
 # Build classifier
-classifier = classifier_factory.build_classifier(CLASSIFY_WITH_WORDS, CLASSIFY_WITH_TAGS)
+classifier = classifier_factory.build_classifier()
 
 # Write out classifier factory to file
 filepath = config.get_classifier_pickle_file_path("naive_bayes")
