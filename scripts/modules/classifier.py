@@ -200,21 +200,6 @@ class PrivacyClassifierFactory:
         metrics.fmeasure = helpers.average([m.fmeasure for m in all_metrics])
         return metrics
 
-# Naive-Bayes Classifier factory
-class NaiveBayesPrivacyClassifierFactory(PrivacyClassifierFactory):
-    # Given features, build the actual classifier
-    def build_classifier_from_features(self, feature_sets):
-        self.classifier = NaiveBayesPrivacyClassifier.train(feature_sets)
-        return self.classifier
-
-    # Given test features, cdetermine the classification
-    def classify_from_test_features(self, test_features):
-        return self.classifier.classify(test_features)
-
-# Naive-Bayes Classifier
-class NaiveBayesPrivacyClassifier(nltk.NaiveBayesClassifier):
-    pass
-
 # Classifier metrics
 class PrivacyClassifierMetrics(object):
     def __init__(self):
@@ -226,3 +211,55 @@ class PrivacyClassifierMetrics(object):
         return str(self.__dict__)
     def __repr__(self):
         return str(self.__dict__)
+
+""" Naive Bayes """
+# Naive-Bayes Classifier factory
+class NaiveBayesPrivacyClassifierFactory(PrivacyClassifierFactory):
+    # Given features, build the actual classifier
+    def build_classifier_from_features(self, feature_sets):
+        self.classifier = NaiveBayesPrivacyClassifier.train(feature_sets)
+        return self.classifier
+
+    # Given test features, determine the classification
+    def classify_from_test_features(self, test_features):
+        return self.classifier.classify(test_features)
+
+# Naive-Bayes Classifier
+class NaiveBayesPrivacyClassifier(nltk.NaiveBayesClassifier):
+    pass
+
+""" Keyword """
+# Keyword classifier factory
+class KeywordPrivacyClassifierFactory(PrivacyClassifierFactory):
+    # Given features, build the actual classifier
+    def build_classifier_from_features(self, feature_sets):
+        self.classifier = KeywordPrivacyClassifier()
+        return self.classifier
+
+    # Override to change what the features are for this classifier
+    def compute_metrics_from_test_data(self, test_data):
+        # Feature sets are just the content
+        feature_sets = [(x['content'], x['class']) for x in test_data]
+
+        # Call the subclass abstract method
+        return self.compute_metrics_from_test_features(feature_sets)
+
+    # Given test features, determine the classification
+    def classify_from_test_features(self, content):
+        return self.classifier.classify(content.lower())
+
+# Keyword classifier
+class KeywordPrivacyClassifier():
+    # Names of social medias
+    social_medias = ["facebook", "snapchat", "twitter", "instagram", "linkedin",
+        "reddit", "whatsapp", "google-plus", "myspace", "tumblr", "pinterest"]
+
+    # Keywords to look for. Each list is an OR, the list of lists is an AND.
+    keywords = [["privacy"], ["social media"] + social_medias]
+
+    def classify(self, content):
+        for keyword_list in self.keywords:
+            count = sum(1 for keyword in keyword_list if keyword in content)
+            if count == 0:
+                return False
+        return True

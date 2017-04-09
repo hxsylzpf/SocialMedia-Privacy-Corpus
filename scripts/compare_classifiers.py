@@ -14,7 +14,8 @@ classifers = [
     # Classifier Name            UseWords UseTags
     ("NaiveBayesPrivacyClassifier", True, True),
     ("NaiveBayesPrivacyClassifier", False, True),
-    ("NaiveBayesPrivacyClassifier", True, False)
+    ("NaiveBayesPrivacyClassifier", True, False),
+    ("KeywordPrivacyClassifier", None, None)
 ]
 
 # Random seed to ensure comparability across classifiers
