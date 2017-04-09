@@ -49,3 +49,7 @@ def split(a, n):
 # Compute the average of a list
 def average(alist):
     return sum(alist) / len(alist)
+
+# Sets the random seed
+def set_random_seed(seed):
+    random.seed(seed)

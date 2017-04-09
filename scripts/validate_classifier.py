@@ -11,6 +11,9 @@ from modules.classifier import NaiveBayesPrivacyClassifierFactory
 CLASSIFY_WITH_WORDS = True
 CLASSIFY_WITH_TAGS = True
 
+# Random seed to ensure comparability across classifiers
+RANDOM_SEED = "495/591"
+
 # Command line argument specifies the number of folds to use
 if len(sys.argv) != 2:
     print("Usage: validate_classifier.py [# of folds]")
@@ -38,6 +41,9 @@ print("Setting up classifier...")
 classifier_factory = NaiveBayesPrivacyClassifierFactory(useWords=CLASSIFY_WITH_WORDS,
                                                         useTags=CLASSIFY_WITH_TAGS)
 classifier_factory.set_training_data(training_data)
+
+# Set random seed for reproducability
+helpers.set_random_seed(RANDOM_SEED)
 
 # Perform cross-validation
 metrics = classifier_factory.cross_validate(numFolds, output=True)
