@@ -3,8 +3,8 @@
     Responsible for miscellenous helper functions
 """
 import json
-import hashlib
 import random
+import hashlib
 
 # Pretty print a JSON object
 def json_print(obj):

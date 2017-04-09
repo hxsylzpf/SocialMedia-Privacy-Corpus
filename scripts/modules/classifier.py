@@ -184,7 +184,8 @@ class PrivacyClassifierFactory:
             train_data = [record for fold in train_folds for record in fold]
 
             # Create a classifier with this training data
-            classifier_factory = self.__class__()
+            classifier_factory = self.__class__(useWords=self.useWords,
+                                                useTags=self.useTags)
             classifier_factory.set_training_data(train_data)
             classifier = classifier_factory.build_classifier()
 
@@ -203,12 +204,16 @@ class PrivacyClassifierFactory:
 class NaiveBayesPrivacyClassifierFactory(PrivacyClassifierFactory):
     # Given features, build the actual classifier
     def build_classifier_from_features(self, feature_sets):
-        self.classifier = nltk.NaiveBayesClassifier.train(feature_sets)
+        self.classifier = NaiveBayesPrivacyClassifier.train(feature_sets)
         return self.classifier
 
     # Given test features, cdetermine the classification
     def classify_from_test_features(self, test_features):
         return self.classifier.classify(test_features)
+
+# Naive-Bayes Classifier
+class NaiveBayesPrivacyClassifier(nltk.NaiveBayesClassifier):
+    pass
 
 # Classifier metrics
 class PrivacyClassifierMetrics(object):

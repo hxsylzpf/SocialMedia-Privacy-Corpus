@@ -8,6 +8,7 @@ import glob
 from modules import config, helpers
 from modules.classifier import NaiveBayesPrivacyClassifierFactory
 
+# Options for classifiers
 CLASSIFY_WITH_WORDS = True
 CLASSIFY_WITH_TAGS = True
 
