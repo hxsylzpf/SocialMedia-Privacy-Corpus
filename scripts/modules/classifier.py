@@ -13,16 +13,20 @@ from collections import Counter
 
 # Create feature sets for a list of records
 # If any of the feature parameters are None, assume no classification by them
-def create_feature_sets(records, word_features=None, tag_features=None):
+def create_feature_sets(records, word_features=None, tag_features=None, useCoreWords=True):
     # Create a feature set for each record in the data
     feature_sets = []
     for record in records:
         features = {}
         # Word features?
         if word_features:
-            record_core_words = set(record['core-words'])
+            if useCoreWords:
+                record_words = set(record['core-words'])
+            else:
+                record_words = set(record['words'].keys())
             for word in word_features:
-                features["contains({})".format(word)] = (word in record_core_words)
+                features["contains({})".format(word)] = (word in record_words)
+
         # Tag features?
         if tag_features:
             record_tags = set(record['tags'])
@@ -33,8 +37,11 @@ def create_feature_sets(records, word_features=None, tag_features=None):
 
 # Superclass for all classifier factory types
 class PrivacyClassifierFactory:
-    def __init__(self, useCoreWords=True, useTags=True):
+    def __init__(self, useCoreWords=True, useAllWords=False, useTags=True):
+        if useCoreWords and useAllWords:
+            raise Exception("Can't use both core words and all words")
         self.useCoreWords = useCoreWords
+        self.useAllWords = useAllWords
         self.useTags = useTags
         self.training_data = None
         self.classifier = None
@@ -58,24 +65,28 @@ class PrivacyClassifierFactory:
         self.training_data = training_data
 
     # Get all words from the core or unique words across all training data records
-    def get_all_training_data_words(self, coreWords=True):
-        if coreWords:
+    def get_all_training_data_words(self, useCoreWords=True):
+        if useCoreWords:
             return [x for record in self.training_data for x in record['core-words']]
         else:
-            # TODO
-            raise NotImplementedError("Non-core words not implemented yet")
+            return self.get_n_most_common_training_data_words(None, False)
 
     # Get a count of each word in the training_data
-    def get_training_data_word_counter(self, coreWords=True):
-        return Counter(self.get_all_training_data_words(coreWords))
+    def get_training_data_word_counter(self, useCoreWords=True):
+        if useCoreWords:
+            return Counter(self.get_all_training_data_words(useCoreWords))
+        else:
+            dicts = [record['words'] for record in self.training_data]
+            counters = [Counter(d) for d in dicts]
+            return sum(counters, Counter())
 
     # Get all UNIQUE words from the core words across all training data records
-    def get_all_unique_training_data_words(self, coreWords=True):
-        return list(self.get_training_data_word_counter(coreWords))
+    def get_all_unique_training_data_words(self, useCoreWords=True):
+        return list(self.get_training_data_word_counter(useCoreWords))
 
     # Get the n most common words in the training data
-    def get_n_most_common_training_data_words(self, n, coreWords=True):
-        return [w for w, wc in self.get_training_data_word_counter(coreWords).most_common(n)]
+    def get_n_most_common_training_data_words(self, n, useCoreWords=True):
+        return [w for w, wc in self.get_training_data_word_counter(useCoreWords).most_common(n)]
 
     # Get all tags across all training data records
     def get_all_training_data_tags(self):
@@ -99,13 +110,16 @@ class PrivacyClassifierFactory:
         if self.useCoreWords:
             # Limit by word limit if provided
             self.word_features = self.get_n_most_common_training_data_words(limit)
+        elif self.useAllWords:
+            # Limit by word limit if provided
+            self.word_features = self.get_n_most_common_training_data_words(limit, False)
         else:
             self.word_features = None
         if self.useTags:
             self.tag_features = self.get_all_unique_training_data_tags()
         else:
             self.tag_features = None
-        return create_feature_sets(records, self.word_features, self.tag_features)
+        return create_feature_sets(records, self.word_features, self.tag_features, self.useCoreWords)
 
     # Generic method of building classifier. Includes getting the feature sets
     # and calling an abstract method for building the classifier depending
@@ -190,6 +204,7 @@ class PrivacyClassifierFactory:
 
             # Create a classifier with this training data
             classifier_factory = self.__class__(useCoreWords=self.useCoreWords,
+                                                useAllWords=self.useAllWords,
                                                 useTags=self.useTags)
             classifier_factory.set_training_data(train_data)
             classifier = classifier_factory.build_classifier()
@@ -212,6 +227,8 @@ class PrivacyClassifierMetrics(object):
         self.precision = None
         self.recall = None
         self.fmeasure = None
+        self.train_time = None
+        self.test_time = None
     def __str__(self):
         return str(self.__dict__)
     def __repr__(self):

@@ -9,7 +9,8 @@ from modules import config, helpers
 from modules.classifier import NaiveBayesPrivacyClassifierFactory
 
 # Options for classifiers
-CLASSIFY_WITH_CORE_WORDS = True
+CLASSIFY_WITH_CORE_WORDS = False
+CLASSIFY_WITH_ALL_WORDS = not CLASSIFY_WITH_CORE_WORDS
 CLASSIFY_WITH_TAGS = True
 
 # Random seed to ensure comparability across classifiers
@@ -40,6 +41,7 @@ for fp in training_data_files:
 # Get a Naive-Bayes Classifier factory object to setup the classifier for validation
 print("Setting up classifier...")
 classifier_factory = NaiveBayesPrivacyClassifierFactory(useCoreWords=CLASSIFY_WITH_CORE_WORDS,
+                                                        useAllWords=CLASSIFY_WITH_ALL_WORDS,
                                                         useTags=CLASSIFY_WITH_TAGS)
 classifier_factory.set_training_data(training_data)
 
