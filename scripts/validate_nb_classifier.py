@@ -14,7 +14,7 @@ CLASSIFY_WITH_ALL_WORDS = not CLASSIFY_WITH_CORE_WORDS
 CLASSIFY_WITH_TAGS = True
 
 # Random seed to ensure comparability across classifiers
-RANDOM_SEED = "495/591"
+RANDOM_SEED = config.get_random_seed()
 
 # Command line argument specifies the number of folds to use
 if len(sys.argv) != 2:

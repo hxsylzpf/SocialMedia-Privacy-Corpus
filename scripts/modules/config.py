@@ -65,3 +65,7 @@ def get_training_data_splits_paths():
 def get_classifier_pickle_file_path(classifier_name="classifier"):
     data_folder_path = get_data_folder_base_path()
     return os.path.join(data_folder_path, classifier_name + ".pkl")
+
+# Get common random seed
+def get_random_seed():
+    return "csc495+591"

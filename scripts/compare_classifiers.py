@@ -16,7 +16,7 @@ NUM_TESTS = 1
 
 # Set random seed. If number of tests = 1, use known random seed.
 if NUM_TESTS == 1:
-    RANDOM_SEED = "495/591"
+    RANDOM_SEED = config.get_random_seed()
 else:
     RANDOM_SEED = random.randint(0, 10000)
 
@@ -58,7 +58,7 @@ for fp in training_data_files:
 # Get a Naive-Bayes Classifier factory object to setup the classifier for validation
 metrics = []
 for i in range(NUM_TESTS):
-    for classifier in classifers:
+    for j, classifier in enumerate(classifers):
         print("Validating classifier {} (use_core_words={}, use_all_words={}, use_tags={}, limit={})..."
             .format(classifier[0], classifier[1], classifier[2], classifier[3], classifier[4]))
 
@@ -91,29 +91,29 @@ for i in range(NUM_TESTS):
         metrics_results.test_time = (end - start)/len(training_data)
 
         # Store results
-        metrics.append(list(classifier) + [metrics_results])
+        metrics.append([j] + list(classifier) + [metrics_results])
             #[v for (k, v) in sorted(metrics_results.__dict__.items())])
 
 # Sort metrics
-metrics = sorted(metrics, key=lambda x: (x[0], x[1], x[2], x[3], int(x[4] or 0)))
+metrics = sorted(metrics, key=lambda x: (x[0]))
 
 # Average metrics
 averaged_metrics = []
 for i in range(0, len(metrics), NUM_TESTS):
     sublist = metrics[i:i + NUM_TESTS]
     metric = PrivacyClassifierMetrics()
-    metric.accuracy = sum(x[len(classifier)].accuracy for x in sublist)/float(NUM_TESTS)
-    metric.fmeasure = sum(x[len(classifier)].fmeasure for x in sublist)/float(NUM_TESTS)
-    metric.precision = sum(x[len(classifier)].precision for x in sublist)/float(NUM_TESTS)
-    metric.recall = sum(x[len(classifier)].recall for x in sublist)/float(NUM_TESTS)
-    metric.test_time = sum(x[len(classifier)].test_time for x in sublist)/float(NUM_TESTS)
-    metric.train_time = sum(x[len(classifier)].train_time for x in sublist)/float(NUM_TESTS)
-    averaged_metrics.append(sublist[0][:len(classifier)] +
+    metric.accuracy = sum(x[len(classifier) + 1].accuracy for x in sublist)/float(NUM_TESTS)
+    metric.fmeasure = sum(x[len(classifier) + 1].fmeasure for x in sublist)/float(NUM_TESTS)
+    metric.precision = sum(x[len(classifier) + 1].precision for x in sublist)/float(NUM_TESTS)
+    metric.recall = sum(x[len(classifier) + 1].recall for x in sublist)/float(NUM_TESTS)
+    metric.test_time = sum(x[len(classifier) + 1].test_time for x in sublist)/float(NUM_TESTS)
+    metric.train_time = sum(x[len(classifier) + 1].train_time for x in sublist)/float(NUM_TESTS)
+    averaged_metrics.append(sublist[0][1:len(classifier) + 1] +
         [v for (k, v) in sorted(metric.__dict__.items())])
 
 # Print
 print()
 print("* Averaged over {} iterations".format(NUM_TESTS))
 print()
-headers = ["Classifier", "use_core_words", "use_all_words", "use_tags", "Limit"] + [k for (k, v) in sorted(metrics_results.__dict__.items())]
+headers = ["classifier", "use_core_words", "use_all_words", "use_tags", "Limit"] + [k for (k, v) in sorted(metrics_results.__dict__.items())]
 print(tabulate(averaged_metrics, headers=headers))
