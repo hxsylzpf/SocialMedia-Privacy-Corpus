@@ -76,14 +76,14 @@ def get_content_response_for_multiple_tags_query(tags, pageNum=1):
 # Get content for an article with ID
 def get_title_body_tags_for_article_id(articleId):
     headers = {
-        "show-blocks": "body",
+        "show-fields": "bodyText",
         "show-tags": "keyword"
     }
     content = theguardian_content.Content(api=api_key, **headers)
     single_id_content = content.find_by_id(articleId)
     res = content.get_results(single_id_content)
     title = str(helpers.sanitize(res[0]['webTitle']))
-    body_text = str(helpers.sanitize(res[0]['blocks']['body'][0]['bodyTextSummary']))
+    body_text = str(helpers.sanitize(res[0]['fields']['bodyText']))
     tags = [x['id'] for x in res[0]['tags']]
     return (title, body_text, tags)
 
