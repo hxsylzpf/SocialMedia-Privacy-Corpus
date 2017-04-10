@@ -45,6 +45,15 @@ def get_training_data_id_file_paths():
     no_id_file = os.path.join(training_data_path, "no.ids")
     return (training_data_path, yes_id_file, no_id_file)
 
+# Get the ID file paths
+def get_test_data_id_file_paths():
+    test_data_path = os.path.abspath(
+                            os.path.join(
+                                os.path.dirname(os.path.realpath(__file__)),
+                                "../../test_data"))
+    id_file = os.path.join(test_data_path, "ids")
+    return (test_data_path, id_file)
+
 # Get the paths for the training data split files
 def get_training_data_splits_paths():
     data_folder_path = os.path.join(get_data_folder_base_path(), "training_data")

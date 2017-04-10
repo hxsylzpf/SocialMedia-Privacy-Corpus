@@ -73,6 +73,30 @@ def get_content_response_for_multiple_tags_query(tags, pageNum=1):
     numPages = res['response']['pages']
     return (numPages, [{ 'id': x['id'], 'title': x['webTitle'],'url': x['webUrl']} for x in res['response']['results']])
 
+# Get a large number of ids that correspond to tag or keyword query
+def get_ids_for_query(tags="", keywords="", pageNum=1):
+    author_blacklist = ["Guardian readers"]
+
+    if tags is None or len(tags) == 0:
+        tags = "type/article"
+    else:
+        tags += ",type/article"
+
+    headers = {
+        "tag": tags,
+        "q": keywords,
+        "page": pageNum,
+        "page-size": 100,
+        "show-fields": "byline"
+    }
+
+    res = get_content_response(headers)
+
+    numPages = res['response']['pages']
+    ids = [x['id'] for x in res['response']['results'] if "fields" not in x or x['fields']['byline'] not in author_blacklist]
+
+    return (numPages, ids)
+
 # Get content for an article with ID
 def get_title_body_tags_for_article_id(articleId):
     headers = {
