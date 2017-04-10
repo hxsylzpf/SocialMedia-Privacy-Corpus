@@ -2,12 +2,20 @@ import sys
 from modules import api, helpers, config
 
 # Command line arguments
-if len(sys.argv) != 3:
-    print("Usage: find_test_data.py [type] [search_string]")
+if len(sys.argv) != 4:
+    print("Usage: find_test_data.py [type] [search_string] [printToFile (true or false)]")
     sys.exit(1)
+
+# Max number of pages we want to retrieve
+MAX_PAGES = 100
 
 search_type = sys.argv[1]
 search_string = sys.argv[2]
+print_to_file = sys.argv[3]
+
+if ( (print_to_file != "true") and (print_to_file != "false")):
+    print("Usage: printToFile must be 'true' or 'false'")
+    sys.exit(1)
 
 folder_path, id_path = config.get_test_data_id_file_paths()
 with open(id_path, "r") as f:
@@ -20,6 +28,7 @@ if (search_type == "tag"):
     numPages, results = api.get_ids_for_query(tags=search_string)
     results_id_set = set(results)
 
+    numPages = MAX_PAGES if numPages > MAX_PAGES else numPages
     # get the rest of the results
     for i in range( 2, numPages + 1):
         p, results = api.get_ids_for_query(tags=search_string, pageNum=i)
@@ -33,6 +42,7 @@ elif (search_type == "content"):
     numPages, results = api.get_ids_for_query(keywords=search_string)
     results_id_set = set(results)
 
+    numPages = MAX_PAGES if numPages > MAX_PAGES else numPages
     # get the rest of the results
     for i in range( 2, numPages + 1):
         p, results = api.get_ids_for_query(keywords=search_string, pageNum=i)
@@ -48,6 +58,11 @@ else:
 # add new ids to id file
 ids_to_be_added = results_id_set - existing_id_set
 print("{} ids added".format(len(ids_to_be_added)))
-with open(id_path, "a") as f:
-    to_append = "\n".join(ids_to_be_added)
-    f.write(to_append)
+
+if (print_to_file == "true") :
+    with open(id_path, "a") as f:
+        to_append = "\n".join(ids_to_be_added)
+        f.write(to_append)
+elif (print_to_file == "false"):
+    to_print = "\n".join(ids_to_be_added)
+    print(to_print)

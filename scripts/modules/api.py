@@ -75,7 +75,7 @@ def get_content_response_for_multiple_tags_query(tags, pageNum=1):
 
 # Get a large number of ids that correspond to tag or keyword query
 def get_ids_for_query(tags="", keywords="", pageNum=1):
-    author_blacklist = ["Guardian readers"]
+    author_blacklist = ["Guardian readers", "Associated Press"]
 
     if tags is None or len(tags) == 0:
         tags = "type/article"
