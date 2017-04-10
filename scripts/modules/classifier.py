@@ -237,7 +237,7 @@ class NaiveBayesPrivacyClassifier(nltk.NaiveBayesClassifier):
 # Keyword classifier factory
 class KeywordPrivacyClassifierFactory(PrivacyClassifierFactory):
     # Given features, build the actual classifier
-    def build_classifier_from_features(self, feature_sets):
+    def build_classifier(self):
         self.classifier = KeywordPrivacyClassifier()
         return self.classifier
 
@@ -257,14 +257,15 @@ class KeywordPrivacyClassifierFactory(PrivacyClassifierFactory):
 class KeywordPrivacyClassifier():
     # Names of social medias
     social_medias = ["facebook", "snapchat", "twitter", "instagram", "linkedin",
-        "reddit", "whatsapp", "google-plus", "myspace", "tumblr", "pinterest"]
+        "reddit", "whatsapp", "google+", "myspace", "tumblr", "pinterest",
+        "hangouts"]
 
     # Keywords to look for. Each list is an OR, the list of lists is an AND.
     keywords = [["privacy"], ["social media"] + social_medias]
 
     def classify(self, content):
         for keyword_list in self.keywords:
-            count = sum(1 for keyword in keyword_list if keyword in content)
+            count = sum(1 for keyword in keyword_list if keyword in content.lower())
             if count == 0:
                 return False
         return True
@@ -273,7 +274,7 @@ class KeywordPrivacyClassifier():
 # Tag classifier factory
 class TagPrivacyClassifierFactory(PrivacyClassifierFactory):
     # Given features, build the actual classifier
-    def build_classifier_from_features(self, feature_sets):
+    def build_classifier(self):
         self.classifier = TagPrivacyClassifier()
         return self.classifier
 

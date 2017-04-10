@@ -37,9 +37,20 @@ def random_sample(slist):
 def remove_bad_puncutation(text):
     return text.replace('‘', '\'').replace('’', '\'').replace('“', '\"').replace('”', '\"')
 
+# Attempts to filter out related articles from the text
+def remove_related_articles(text):
+    # Related articles appear after a bullet point at the end of the text
+    # Look for the last period in the article, remove all text after if bullet
+    index = text.rfind('.') + 1
+    if text[index:].strip()[0] == '•':
+        return text[:index]
+    return text
+
 # Santizes text for our application
 def sanitize(text):
-    return remove_bad_puncutation(text)
+    text = remove_bad_puncutation(text)
+    text = remove_related_articles(text)
+    return text
 
 # Splits a list into N equal parts:
 def split(a, n):
