@@ -40,9 +40,9 @@ for fp in training_data_files:
 
 # Get a Naive-Bayes Classifier factory object to setup the classifier for validation
 print("Setting up classifier...")
-classifier_factory = NaiveBayesPrivacyClassifierFactory(useCoreWords=CLASSIFY_WITH_CORE_WORDS,
-                                                        useAllWords=CLASSIFY_WITH_ALL_WORDS,
-                                                        useTags=CLASSIFY_WITH_TAGS)
+classifier_factory = NaiveBayesPrivacyClassifierFactory(use_core_words=CLASSIFY_WITH_CORE_WORDS,
+                                                        use_all_words=CLASSIFY_WITH_ALL_WORDS,
+                                                        use_tags=CLASSIFY_WITH_TAGS)
 classifier_factory.set_training_data(training_data)
 
 # Set random seed for reproducability

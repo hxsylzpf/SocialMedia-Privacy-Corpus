@@ -13,14 +13,14 @@ from collections import Counter
 
 # Create feature sets for a list of records
 # If any of the feature parameters are None, assume no classification by them
-def create_feature_sets(records, word_features=None, tag_features=None, useCoreWords=True):
+def create_feature_sets(records, word_features=None, tag_features=None, use_core_words=True):
     # Create a feature set for each record in the data
     feature_sets = []
     for record in records:
         features = {}
         # Word features?
         if word_features:
-            if useCoreWords:
+            if use_core_words:
                 record_words = set(record['core-words'])
             else:
                 record_words = set(record['words'].keys())
@@ -37,12 +37,13 @@ def create_feature_sets(records, word_features=None, tag_features=None, useCoreW
 
 # Superclass for all classifier factory types
 class PrivacyClassifierFactory:
-    def __init__(self, useCoreWords=True, useAllWords=False, useTags=True):
-        if useCoreWords and useAllWords:
+    def __init__(self, use_core_words=True, use_all_words=False, use_tags=True, word_limit=None):
+        if use_core_words and use_all_words:
             raise Exception("Can't use both core words and all words")
-        self.useCoreWords = useCoreWords
-        self.useAllWords = useAllWords
-        self.useTags = useTags
+        self.use_core_words = use_core_words
+        self.use_all_words = use_all_words
+        self.use_tags = use_tags
+        self.word_limit = word_limit
         self.training_data = None
         self.classifier = None
         self.word_features = None
@@ -65,28 +66,28 @@ class PrivacyClassifierFactory:
         self.training_data = training_data
 
     # Get all words from the core or unique words across all training data records
-    def get_all_training_data_words(self, useCoreWords=True):
-        if useCoreWords:
+    def get_all_training_data_words(self, use_core_words=True):
+        if use_core_words:
             return [x for record in self.training_data for x in record['core-words']]
         else:
             return self.get_n_most_common_training_data_words(None, False)
 
     # Get a count of each word in the training_data
-    def get_training_data_word_counter(self, useCoreWords=True):
-        if useCoreWords:
-            return Counter(self.get_all_training_data_words(useCoreWords))
+    def get_training_data_word_counter(self, use_core_words=True):
+        if use_core_words:
+            return Counter(self.get_all_training_data_words(use_core_words))
         else:
             dicts = [record['words'] for record in self.training_data]
             counters = [Counter(d) for d in dicts]
             return sum(counters, Counter())
 
     # Get all UNIQUE words from the core words across all training data records
-    def get_all_unique_training_data_words(self, useCoreWords=True):
-        return list(self.get_training_data_word_counter(useCoreWords))
+    def get_all_unique_training_data_words(self, use_core_words=True):
+        return list(self.get_training_data_word_counter(use_core_words))
 
     # Get the n most common words in the training data
-    def get_n_most_common_training_data_words(self, n, useCoreWords=True):
-        return [w for w, wc in self.get_training_data_word_counter(useCoreWords).most_common(n)]
+    def get_n_most_common_training_data_words(self, n, use_core_words=True):
+        return [w for w, wc in self.get_training_data_word_counter(use_core_words).most_common(n)]
 
     # Get all tags across all training data records
     def get_all_training_data_tags(self):
@@ -107,26 +108,26 @@ class PrivacyClassifierFactory:
     # Create feature sets for a list of records
     def create_feature_sets(self, records, limit=None):
         # Pull all the unique words/tags in the training data records if requested
-        if self.useCoreWords:
+        if self.use_core_words:
             # Limit by word limit if provided
             self.word_features = self.get_n_most_common_training_data_words(limit)
-        elif self.useAllWords:
+        elif self.use_all_words:
             # Limit by word limit if provided
             self.word_features = self.get_n_most_common_training_data_words(limit, False)
         else:
             self.word_features = None
-        if self.useTags:
+        if self.use_tags:
             self.tag_features = self.get_all_unique_training_data_tags()
         else:
             self.tag_features = None
-        return create_feature_sets(records, self.word_features, self.tag_features, self.useCoreWords)
+        return create_feature_sets(records, self.word_features, self.tag_features, self.use_core_words)
 
     # Generic method of building classifier. Includes getting the feature sets
     # and calling an abstract method for building the classifier depending
     # on the classifier type.
     def build_classifier(self):
         # Create feature sets for each record in training data
-        feature_sets = self.create_feature_sets(self.training_data)
+        feature_sets = self.create_feature_sets(self.training_data, self.word_limit)
 
         # Build the classifier
         self.classifier = self.build_classifier_from_features(feature_sets)
@@ -203,9 +204,10 @@ class PrivacyClassifierFactory:
             train_data = [record for fold in train_folds for record in fold]
 
             # Create a classifier with this training data
-            classifier_factory = self.__class__(useCoreWords=self.useCoreWords,
-                                                useAllWords=self.useAllWords,
-                                                useTags=self.useTags)
+            classifier_factory = self.__class__(use_core_words=self.use_core_words,
+                                                use_all_words=self.use_all_words,
+                                                use_tags=self.use_tags,
+                                                word_limit=self.word_limit)
             classifier_factory.set_training_data(train_data)
             classifier = classifier_factory.build_classifier()
 

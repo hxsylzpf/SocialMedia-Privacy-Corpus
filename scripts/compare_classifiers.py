@@ -20,16 +20,17 @@ if NUM_TESTS == 1:
 else:
     RANDOM_SEED = random.randint(0, 10000)
 
-# List of classifiers to test - should have an appropriate factory
+# List of classifiers to test - should have an appropriate PrivacyClassifierFactory
 classifers = [
-    # Classifier Name               UseCoreWords UseAllWords UseTags
-    ("NaiveBayesPrivacyClassifier", True,        False,      True),  # N-B core words + tags
-    ("NaiveBayesPrivacyClassifier", False,       True,       True),  # N-B all words + tags
-    ("NaiveBayesPrivacyClassifier", True,        False,      False), # N-B core words only
-    ("NaiveBayesPrivacyClassifier", False,       True,       False), # N-B all words only
-    ("NaiveBayesPrivacyClassifier", False,       False,      True),  # N-B tags only
-    ("KeywordPrivacyClassifier",    None,        None,       None),  # N-B keywords
-    ("TagPrivacyClassifier",        None,        None,       None)   # N-B tags
+    # Classifier    use_core_words  use_all_words   use_tags    feature_limit
+    ("NaiveBayes",  True,           False,          True,       None),  # N-B core words + tags
+    ("NaiveBayes",  False,          True,           True,       None),  # N-B all words + tags
+    ("NaiveBayes",  True,           False,          False,      None),  # N-B core words only
+    ("NaiveBayes",  False,          True,           False,      None),  # N-B all words only
+    ("NaiveBayes",  False,          True,           False,      4000),  # N-B all words only limited
+    ("NaiveBayes",  False,          False,          True,       None),  # N-B tags only
+    ("Keyword",     None,           None,           None,       None),  # keywords
+    ("Tag",         None,           None,           None,       None)   # tags
 ]
 
 # Command line argument specifies the number of folds to use
@@ -58,15 +59,16 @@ for fp in training_data_files:
 metrics = []
 for i in range(NUM_TESTS):
     for classifier in classifers:
-        print("Validating classifier {} (useCoreWords={}, useAllWords={}, useTags={})..."
-            .format(classifier[0], classifier[1], classifier[2], classifier[3]))
+        print("Validating classifier {} (use_core_words={}, use_all_words={}, use_tags={}, limit={})..."
+            .format(classifier[0], classifier[1], classifier[2], classifier[3], classifier[4]))
 
         # Get classifier factory
-        classifier_factory_classname = "{}Factory".format(classifier[0])
+        classifier_factory_classname = "{}PrivacyClassifierFactory".format(classifier[0])
         classifier_factory_class = getattr(sys.modules[__name__], classifier_factory_classname)
-        classifier_factory = classifier_factory_class(useCoreWords=classifier[1],
-                                                      useAllWords=classifier[2],
-                                                      useTags=classifier[3])
+        classifier_factory = classifier_factory_class(use_core_words=classifier[1],
+                                                      use_all_words=classifier[2],
+                                                      use_tags=classifier[3],
+                                                      word_limit=classifier[4])
         classifier_factory.set_training_data(training_data)
 
         # Set random seed for reproducability
@@ -93,7 +95,7 @@ for i in range(NUM_TESTS):
             #[v for (k, v) in sorted(metrics_results.__dict__.items())])
 
 # Sort metrics
-metrics = sorted(metrics, key=lambda x: (x[0], x[1], x[2], x[3]))
+metrics = sorted(metrics, key=lambda x: (x[0], x[1], x[2], x[3], int(x[4] or 0)))
 
 # Average metrics
 averaged_metrics = []
@@ -113,5 +115,5 @@ for i in range(0, len(metrics), NUM_TESTS):
 print()
 print("* Averaged over {} iterations".format(NUM_TESTS))
 print()
-headers = ["Classifier", "UseCoreWords", "UseAllWords", "UseTags"] + [k for (k, v) in sorted(metrics_results.__dict__.items())]
+headers = ["Classifier", "use_core_words", "use_all_words", "use_tags", "Limit"] + [k for (k, v) in sorted(metrics_results.__dict__.items())]
 print(tabulate(averaged_metrics, headers=headers))
