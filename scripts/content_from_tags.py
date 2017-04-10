@@ -3,7 +3,7 @@ from modules import api, helpers
 
 # Command line argument is the tag
 if len(sys.argv) != 2 and len(sys.argv) != 3:
-    print("Usage: content_from_tags.py [tags1,tag2,...] [pageNum]")
+    print("Usage: content_from_tags.py [tag1,tag2,...] [pageNum]")
     sys.exit(1)
 
 if len(sys.argv) == 3:
