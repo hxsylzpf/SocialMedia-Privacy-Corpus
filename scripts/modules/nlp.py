@@ -86,7 +86,20 @@ def top_words(text, n=None):
 
     # Take the most frequent
     freq_counts = Counter(tokens)
-    if n is None:
-        return list(freq_counts.keys())
-    else:
-        return [x[0] for x in freq_counts.most_common(n)]
+    return [x[0] for x in freq_counts.most_common(n)]
+
+# Pull out all unique words from the text, where the words are not stopwords or
+# puncutation or whitespace
+def all_words(text):
+    doc = nlp(text)
+
+     # lemmatize
+    tokens = [str(t.lemma_).lower() for t in doc if is_valid_token(t)]
+
+    # additional filtering of stopwords and puncutation that spacy didn't catch
+    tokens = [t for t in tokens if t not in STOPLIST]
+    tokens = [t for t in tokens if t not in SYMBOLS]
+
+    # Take the most frequent
+    freq_counts = Counter(tokens)
+    return Counter(tokens)

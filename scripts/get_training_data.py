@@ -58,7 +58,8 @@ try:
     print("Retrieving no data...")
     (noRetrieved, noCached) = training_data.get_training_data_files_for_ids(no_ids, no_hashes, NO_FOLDER_PATH, False, shouldReuse, True)
 except:
-    print("\nERROR: Invalid id in ID file - see above index. Perhaps the ID leads to a video or image?")
+    raise
+    print("\nERROR: Possibly invalid id in ID file - see above index. Perhaps the ID leads to a video or image?")
     sys.exit(1)
 
 # Print out statistics
