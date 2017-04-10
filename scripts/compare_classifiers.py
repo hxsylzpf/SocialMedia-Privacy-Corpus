@@ -31,10 +31,8 @@ classifers = [
     ("NaiveBayes",  False,      False,      True,   None,   None),  # N-B tags only
     ("Keyword",     None,       None,       None,   None,   None),  # keywords
     ("Tag",         None,       None,       None,   None,   None),  # tags
-    ("Ensemble",    True,       False,      True,   None,   True),   # ensemble weighted
-    ("Ensemble",    True,       False,      True,   None,   False),  # ensemble unweighted
-    ("Ensemble",    True,       False,      False,  None,   True),  # ensemble weighted no tags
-    ("Ensemble",    True,       False,      False,  None,   False),  # ensemble unweighted no tags
+    ("Ensemble",    True,       False,      True,   None,   True),  # ensemble weighted
+    ("Ensemble",    True,       False,      True,   None,   False), # ensemble unweighted
 ]
 
 # Command line argument specifies the number of folds to use
