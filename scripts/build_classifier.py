@@ -7,11 +7,13 @@ import os
 import sys
 import glob
 from modules import config, helpers
+from modules import classifier as classifierlib
 from modules.classifier import NaiveBayesPrivacyClassifierFactory
 
 CLASSIFY_WITH_CORE_WORDS = True
 CLASSIFY_WITH_ALL_WORDS = not CLASSIFY_WITH_CORE_WORDS
 CLASSIFY_WITH_TAGS = True
+CLASSIFY_WITH_LIMIT = None
 
 # Get all downloaded training data paths
 (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH) = config.get_training_data_folder_paths()
@@ -33,7 +35,8 @@ for fp in training_data_files:
 print("Building classifier...")
 classifier_factory = NaiveBayesPrivacyClassifierFactory(use_core_words=CLASSIFY_WITH_CORE_WORDS,
                                                         use_all_words=CLASSIFY_WITH_ALL_WORDS,
-                                                        use_tags=CLASSIFY_WITH_TAGS)
+                                                        use_tags=CLASSIFY_WITH_TAGS,
+                                                        word_limit=CLASSIFY_WITH_LIMIT)
 
 # Add training data to classifier
 classifier_factory.set_training_data(training_data)
@@ -47,8 +50,11 @@ print("Writing classifier out to file {}...".format(filepath))
 classifier_factory.write_classifier_to_file(filepath)
 
 # Verify file write out
-written_out_classifier = classifier_factory.get_classifier(filepath)
-if written_out_classifier.most_informative_features(5) != classifier.most_informative_features(5):
+print("Validating classifier output...")
+(written_out_classifier, wf, tg, ucw) = classifierlib.load_classifier_from_file(filepath)
+features = classifierlib.create_feature_sets(training_data, wf, tg, ucw, include_class=False)
+results = [written_out_classifier.classify(f) for f in features]
+if len(results) != len(training_data) or written_out_classifier.most_informative_features(5) != classifier.most_informative_features(5):
     print("ERROR: Written out classifier does not match constructed")
     sys.exit(1)
 

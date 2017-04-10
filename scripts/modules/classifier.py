@@ -13,7 +13,7 @@ from collections import Counter
 
 # Create feature sets for a list of records
 # If any of the feature parameters are None, assume no classification by them
-def create_feature_sets(records, word_features=None, tag_features=None, use_core_words=True):
+def create_feature_sets(records, word_features=None, tag_features=None, use_core_words=True, include_class=True):
     # Create a feature set for each record in the data
     feature_sets = []
     for record in records:
@@ -32,8 +32,19 @@ def create_feature_sets(records, word_features=None, tag_features=None, use_core
             record_tags = set(record['tags'])
             for tag in tag_features:
                 features["tagged({})".format(tag)] = (tag in record_tags)
-        feature_sets.append((features, record['class']))
+
+        # Include class if specified and training data
+        if include_class and record['class'] is not None:
+            feature_sets.append((features, record['class']))
+        else:
+            feature_sets.append(features)
     return feature_sets
+
+# Load classifier from file. Returns the classifier and features.
+def load_classifier_from_file(pickle_file):
+    with open(pickle_file, 'rb') as model:
+        classifier, word_features, tag_features, use_core_words = pickle.load(model)
+    return (classifier, word_features, tag_features, use_core_words)
 
 # Superclass for all classifier factory types
 class PrivacyClassifierFactory:
@@ -49,17 +60,22 @@ class PrivacyClassifierFactory:
         self.word_features = None
         self.tag_features = None
 
-    # Returns the constructed classifier, or loads it from a file
-    def get_classifier(self, pickle_file):
-        if pickle_file is not None:
-            with open(pickle_file, 'rb') as model:
-                self.classifier = pickle.load(model)
+    # Returns the constructed classifier
+    def get_classifier(self):
+        return self.classifier
+
+    # Loads the classifier from a file
+    def get_classifier_from_file(self, pickle_file):
+        with open(pickle_file, 'rb') as model:
+            self.classifier, self.word_features, self.tag_features, self.use_core_words = pickle.load(model)
+            self.use_all_words = not self.use_core_words
+            self.use_tags = self.tag_features is not None
         return self.classifier
 
     # Write out classifier to file
     def write_classifier_to_file(self, filepath):
         with open(filepath, 'wb') as pickle_file:
-            pickle.dump(self.classifier, pickle_file)
+            pickle.dump([self.classifier, self.word_features, self.tag_features, self.use_core_words], pickle_file)
 
     # Set the classifier's training data
     def set_training_data(self, training_data):
@@ -250,7 +266,9 @@ class NaiveBayesPrivacyClassifierFactory(PrivacyClassifierFactory):
 
 # Naive-Bayes Classifier
 class NaiveBayesPrivacyClassifier(nltk.NaiveBayesClassifier):
-    pass
+    # Perform classification
+    def classify(self, test_features):
+        return super().classify(test_features)
 
 """ Keyword """
 # Keyword classifier factory
