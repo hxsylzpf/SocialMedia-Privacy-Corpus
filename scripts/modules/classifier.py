@@ -48,13 +48,14 @@ def load_classifier_from_file(pickle_file):
 
 # Superclass for all classifier factory types
 class PrivacyClassifierFactory:
-    def __init__(self, use_core_words=True, use_all_words=False, use_tags=True, word_limit=None):
+    def __init__(self, use_core_words=True, use_all_words=False, use_tags=True, word_limit=None, use_accuracy_weighted=None):
         if use_core_words and use_all_words:
             raise Exception("Can't use both core words and all words")
         self.use_core_words = use_core_words
         self.use_all_words = use_all_words
         self.use_tags = use_tags
         self.word_limit = word_limit
+        self.use_accuracy_weighted = use_accuracy_weighted
         self.training_data = None
         self.classifier = None
         self.word_features = None
@@ -223,7 +224,8 @@ class PrivacyClassifierFactory:
             classifier_factory = self.__class__(use_core_words=self.use_core_words,
                                                 use_all_words=self.use_all_words,
                                                 use_tags=self.use_tags,
-                                                word_limit=self.word_limit)
+                                                word_limit=self.word_limit,
+                                                use_accuracy_weighted=self.use_accuracy_weighted)
             classifier_factory.set_training_data(train_data)
             classifier = classifier_factory.build_classifier()
 
@@ -348,3 +350,97 @@ class TagPrivacyClassifier():
             if count == 0:
                 return False
         return True
+
+""" Ensemble classifier - Naive Bayes and Keyword """
+# Ensemble Classifier factory
+class EnsemblePrivacyClassifierFactory(PrivacyClassifierFactory):
+    # Given features, build the actual classifier
+    def build_classifier_from_features(self, feature_sets):
+        # Build one Naive-Bayes and one keyword classifier
+        self.classifier = EnsemblePrivacyClassifier(self.training_data, self.use_accuracy_weighted)
+        self.classifier.train(use_core_words=self.use_core_words,
+                              use_all_words=self.use_all_words,
+                              use_tags=self.use_tags,
+                              word_limit=self.word_limit)
+        return self.classifier
+
+    # Override to change what the features are for this classifier
+    def compute_metrics_from_test_data(self, test_data):
+        # Feature sets are different for each classifier
+        naive_bayes_features = self.create_feature_sets(test_data)
+        keyword_features = [(x['content'], x['class']) for x in test_data]  # just content
+
+        feature_sets = []
+        for nbf, record in zip(naive_bayes_features, test_data):
+            # Pack the naive bayes and keywords features together
+            nb_features_only = nbf[0]
+            nb_class_only = nbf[1]
+            feature_sets.append(([nb_features_only, record['content']], nb_class_only))
+            # Sanity check
+            if nb_class_only != record['class']:
+                raise Exception("ERROR: Cannot match up features for ensemble")
+
+        # Call the subclass abstract method
+        return self.compute_metrics_from_test_features(feature_sets)
+
+    # Given test features, determine the classification
+    def classify_from_test_features(self, test_features):
+        return self.classifier.classify(test_features)
+
+# Ensemble Classifier
+class EnsemblePrivacyClassifier():
+    num_folds = 5       # for evaluation of the classifiers
+    threshold = 0.8     # vote threshold
+
+    def __init__(self, training_data, use_accuracy_weighted=True):
+        self.training_data = training_data
+        self.use_accuracy_weighted = use_accuracy_weighted
+        self.naive_bayes = None
+        self.naive_bayes_accuracy = None
+        self.keyword = None
+        self.keyword_accuracy = None
+
+    # Run cross-validation to compute the accuracy weights for each classifier
+    def train(self, use_core_words=True, use_all_words=False, use_tags=True, word_limit=None):
+        # Naive Bayes evaluation
+        nb_factory = NaiveBayesPrivacyClassifierFactory(use_core_words=use_core_words,
+                                                        use_all_words=use_all_words,
+                                                        use_tags=use_tags,
+                                                        word_limit=word_limit)
+        nb_factory.set_training_data(self.training_data)
+        self.naive_bayes = nb_factory.build_classifier()
+        if self.use_accuracy_weighted:
+            self.naive_bayes_accuracy = nb_factory.cross_validate(self.num_folds).precision
+
+        # Keyword evaluation
+        kw_factory = KeywordPrivacyClassifierFactory()
+        kw_factory.set_training_data(self.training_data)
+        self.keyword = kw_factory.build_classifier()
+        if self.use_accuracy_weighted:
+            self.keyword_accuracy = kw_factory.cross_validate(self.num_folds).precision
+
+    # Perform classification
+    def classify(self, test_features):
+        # Naive Bayes classification
+        naive_bayes_features = test_features[0]
+        naive_bayes_class = self.naive_bayes.classify(naive_bayes_features)
+
+        # Keyword classification
+        keyword_features = test_features[1]
+        keyword_class = self.keyword.classify(keyword_features)
+
+        # If both agree, return consensus. If disagree, make a further decision.
+        if naive_bayes_class == keyword_class:
+            return naive_bayes_class
+        else:
+            # If we are using accuracy weighted decisions, check the vote
+            if self.use_accuracy_weighted:
+                vote = self.naive_bayes_accuracy * (1 if naive_bayes_class else 0) + \
+                       self.keyword_accuracy * (1 if keyword_class else 0)
+                if vote >= self.threshold:
+                    return True
+                else:
+                    return False
+            # Overwise conservatively say False (higher precision)
+            else:
+                return False
