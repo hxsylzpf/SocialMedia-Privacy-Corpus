@@ -419,7 +419,25 @@ class EnsemblePrivacyClassifier():
         if self.use_accuracy_weighted:
             self.keyword_accuracy = kw_factory.cross_validate(self.num_folds).precision
 
-    # Perform classification
+    # Perform classification of single test record
+    # Abstracts the step of needing to build appropriate test features
+    def classify_record(self, test_record, word_features, tag_features, use_core_words=True):
+        # Build features for the Naive-Bayes classifier
+        naive_bayes_features = create_feature_sets(records=[test_record],
+                                                   word_features=word_features,
+                                                   tag_features=tag_features,
+                                                   use_core_words=use_core_words,
+                                                   include_class=False)
+
+        # Build features for keyword classifier
+        keyword_features = test_record['title'].lower() + test_record['content'].lower()
+
+        # Classify with these features
+        return classify([naive_bayes_features, keyword_features])
+
+    # Perform classification from test features
+    # We expect test features to be a list [x1, x2] where x1 is the test
+    # features for the nltk Naive Bayes classifier and x2 is the article text
     def classify(self, test_features):
         # Naive Bayes classification
         naive_bayes_features = test_features[0]
