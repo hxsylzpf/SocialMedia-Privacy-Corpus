@@ -14,7 +14,8 @@ def get_training_data_record(articleId, classification, title, content, tags):
         'title': title,
         'content': content,
         'tags': tags,
-        'core-words': None
+        'core-words': None,
+        'words': None
     }
     record_json = helpers.json_object_to_string(record)
     return record_json
