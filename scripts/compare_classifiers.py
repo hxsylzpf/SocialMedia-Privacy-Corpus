@@ -23,14 +23,14 @@ else:
 # List of classifiers to test - should have an appropriate PrivacyClassifierFactory
 classifers = [
     # Classifier    core_words  all_words   tags    limit   weighted
-    ("NaiveBayes",  True,       False,      True,   None,   None),  # N-B core words + tags
-    ("NaiveBayes",  False,      True,       True,   None,   None),  # N-B all words + tags
-    ("NaiveBayes",  True,       False,      False,  None,   None),  # N-B core words only
-    ("NaiveBayes",  False,      True,       False,  None,   None),  # N-B all words only
-    ("NaiveBayes",  False,      True,       False,  4000,   None),  # N-B all words only limited
-    ("NaiveBayes",  False,      False,      True,   None,   None),  # N-B tags only
-    ("Keyword",     None,       None,       None,   None,   None),  # keywords
-    ("Tag",         None,       None,       None,   None,   None),  # tags
+    # ("NaiveBayes",  True,       False,      True,   None,   None),  # N-B core words + tags
+    # ("NaiveBayes",  False,      True,       True,   None,   None),  # N-B all words + tags
+    # ("NaiveBayes",  True,       False,      False,  None,   None),  # N-B core words only
+    # ("NaiveBayes",  False,      True,       False,  None,   None),  # N-B all words only
+    # ("NaiveBayes",  False,      True,       False,  4000,   None),  # N-B all words only limited
+    # ("NaiveBayes",  False,      False,      True,   None,   None),  # N-B tags only
+    # ("Keyword",     None,       None,       None,   None,   None),  # keywords
+    # ("Tag",         None,       None,       None,   None,   None),  # tags
     ("Ensemble",    True,       False,      True,   None,   True),  # ensemble weighted
     ("Ensemble",    True,       False,      True,   None,   False), # ensemble unweighted
 ]

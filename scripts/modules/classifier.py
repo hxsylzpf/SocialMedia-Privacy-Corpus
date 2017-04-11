@@ -444,18 +444,16 @@ class EnsemblePrivacyClassifier():
         keyword_features = test_features[1]
         keyword_class = self.keyword.classify(keyword_features)
 
-        # If both agree, return consensus. If disagree, make a further decision.
-        if naive_bayes_class == keyword_class:
-            return naive_bayes_class
+        # If accuracy weighted, make a vote. Otherwise, reach consensus.
+        if self.use_accuracy_weighted:
+            vote = self.naive_bayes_accuracy * (1 if naive_bayes_class else 0) + \
+                   self.keyword_accuracy * (1 if keyword_class else 0)
+            if vote >= self.threshold:
+                return True
+            else:
+                return False
         else:
-            # If we are using accuracy weighted decisions, check the vote
-            if self.use_accuracy_weighted:
-                vote = self.naive_bayes_accuracy * (1 if naive_bayes_class else 0) + \
-                       self.keyword_accuracy * (1 if keyword_class else 0)
-                if vote >= self.threshold:
-                    return True
-                else:
-                    return False
-            # Overwise conservatively say False (higher precision)
+            if naive_bayes_class == keyword_class:
+                return naive_bayes_class
             else:
                 return False
