@@ -8,7 +8,7 @@ import os
 import sys
 from modules import config, data, helpers, training_data
 
-# If optional parameter "clean" provided, do not reuse existing files
+# If optional parameter "update" provided, do not reuse existing files
 if len(sys.argv) == 2 and sys.argv[1] == "update":
     shouldReuse = False
 else:
@@ -22,7 +22,7 @@ print("Verifying directory structure...")
 for folder in (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH):
     data.create_data_folder(folder)
 
-# ID files containing IDs of data to retreieve
+# ID files containing IDs of data to retrieve
 (TRAINING_DATA_PATH, YES_ID_FILE, NO_ID_FILE) = config.get_training_data_id_file_paths()
 
 # Verify ID files exist
@@ -51,7 +51,6 @@ for f in os.listdir(NO_FOLDER_PATH):
         data.delete_file(os.path.join(NO_FOLDER_PATH, f))
 
 # Retrieve the content for each ID and write it out to file
-print("Retrieving yes data...")
 try:
     print("Retrieving yes data...")
     (yesRetrieved, yesCached) = training_data.get_training_data_files_for_ids(yes_ids, yes_hashes, YES_FOLDER_PATH, True, shouldReuse, True)

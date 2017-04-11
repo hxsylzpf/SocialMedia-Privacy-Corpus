@@ -28,14 +28,19 @@ def get_data_folder_base_path():
             os.path.dirname(os.path.realpath(__file__)),
                 "../../data"))
 
-# Get the data folder paths
+# Get the training data folder paths
 def get_training_data_folder_paths():
     data_folder_path = os.path.join(get_data_folder_base_path(), "training_data")
     yes_folder_path = os.path.join(data_folder_path, "yes")
     no_folder_path = os.path.join(data_folder_path, "no")
     return (data_folder_path, yes_folder_path, no_folder_path)
 
-# Get the ID file paths
+# Get the test data folder paths
+def get_test_data_folder_paths():
+    data_folder_path = os.path.join(get_data_folder_base_path(), "test_data")
+    return data_folder_path
+
+# Get the training ID file paths
 def get_training_data_id_file_paths():
     training_data_path = os.path.abspath(
                             os.path.join(
@@ -45,7 +50,7 @@ def get_training_data_id_file_paths():
     no_id_file = os.path.join(training_data_path, "no.ids")
     return (training_data_path, yes_id_file, no_id_file)
 
-# Get the ID file paths
+# Get the test ID file paths
 def get_test_data_id_file_paths():
     test_data_path = os.path.abspath(
                             os.path.join(
