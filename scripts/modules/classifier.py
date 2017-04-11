@@ -21,7 +21,7 @@ def create_feature_sets(records, word_features=None, tag_features=None, use_core
         # Word features?
         if word_features:
             if use_core_words:
-                record_words = set(record['core-words'])
+                record_words = set(record['core-words'].keys())
             else:
                 record_words = set(record['words'].keys())
             for word in word_features:
@@ -84,19 +84,16 @@ class PrivacyClassifierFactory:
 
     # Get all words from the core or unique words across all training data records
     def get_all_training_data_words(self, use_core_words=True):
-        if use_core_words:
-            return [x for record in self.training_data for x in record['core-words']]
-        else:
-            return self.get_n_most_common_training_data_words(None, False)
+        return self.get_n_most_common_training_data_words(None, use_core_words)
 
     # Get a count of each word in the training_data
     def get_training_data_word_counter(self, use_core_words=True):
         if use_core_words:
-            return Counter(self.get_all_training_data_words(use_core_words))
+            dicts = [record['core-words'] for record in self.training_data]
         else:
             dicts = [record['words'] for record in self.training_data]
-            counters = [Counter(d) for d in dicts]
-            return sum(counters, Counter())
+        counters = [Counter(d) for d in dicts]
+        return sum(counters, Counter())
 
     # Get all UNIQUE words from the core words across all training data records
     def get_all_unique_training_data_words(self, use_core_words=True):

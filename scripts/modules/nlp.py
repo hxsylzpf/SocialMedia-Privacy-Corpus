@@ -85,6 +85,7 @@ def top_words(text, n=None):
     tokens = [t for t in tokens if t not in SYMBOLS]
 
     # Take the most frequent
+    return Counter(tokens)
     freq_counts = Counter(tokens)
     return [x[0] for x in freq_counts.most_common(n)]
 
@@ -101,5 +102,4 @@ def all_words(text):
     tokens = [t for t in tokens if t not in SYMBOLS]
 
     # Take the most frequent
-    freq_counts = Counter(tokens)
     return Counter(tokens)
