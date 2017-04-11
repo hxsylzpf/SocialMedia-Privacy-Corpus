@@ -11,6 +11,7 @@ import pickle
 from . import helpers
 from collections import Counter
 
+# Toggle True/False to use word presence/word counts
 USE_WORD_PRESENCE = True
 
 # Create feature sets for a list of records
@@ -402,7 +403,7 @@ class EnsemblePrivacyClassifierFactory(PrivacyClassifierFactory):
 # Ensemble Classifier
 class EnsemblePrivacyClassifier():
     num_folds = 5       # for evaluation of the classifiers
-    threshold = 0.8     # vote threshold
+    threshold = 0.85    # vote threshold
 
     def __init__(self, training_data, use_accuracy_weighted=True):
         self.training_data = training_data
@@ -460,15 +461,17 @@ class EnsemblePrivacyClassifier():
         keyword_class = self.keyword.classify(keyword_features)
 
         # If accuracy weighted, make a vote. Otherwise, reach consensus.
-        if self.use_accuracy_weighted:
-            vote = self.naive_bayes_accuracy * (1 if naive_bayes_class else 0) + \
-                   self.keyword_accuracy * (1 if keyword_class else 0)
-            if vote >= self.threshold:
-                return True
-            else:
-                return False
+        if naive_bayes_class == keyword_class:
+            return naive_bayes_class
         else:
-            if naive_bayes_class == keyword_class:
-                return naive_bayes_class
+            if self.use_accuracy_weighted:
+                # TODO: test with probability weighting
+                naive_bayes_prob = self.naive_bayes.prob_classify(naive_bayes_features).prob(True)
+                vote = self.naive_bayes_accuracy * (naive_bayes_prob if naive_bayes_class else 0) + \
+                       self.keyword_accuracy * (1 if keyword_class else 0)
+                if vote >= self.threshold:
+                    return True
+                else:
+                    return False
             else:
                 return False

@@ -14,7 +14,7 @@ CLASSIFY_WITH_CORE_WORDS = True
 CLASSIFY_WITH_ALL_WORDS = not CLASSIFY_WITH_CORE_WORDS
 CLASSIFY_WITH_TAGS = True
 CLASSIFY_WITH_LIMIT = None
-CLASSIFY_WITH_ACCURACY_WEIGHTS = True
+CLASSIFY_WITH_ACCURACY_WEIGHTS = False
 
 # Set random seed to the one we know
 helpers.set_random_seed(config.get_random_seed())
