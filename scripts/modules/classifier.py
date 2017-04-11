@@ -11,6 +11,8 @@ import pickle
 from . import helpers
 from collections import Counter
 
+USE_WORD_PRESENCE = True
+
 # Create feature sets for a list of records
 # If any of the feature parameters are None, assume no classification by them
 def create_feature_sets(records, word_features=None, tag_features=None, use_core_words=True, include_class=True):
@@ -20,12 +22,25 @@ def create_feature_sets(records, word_features=None, tag_features=None, use_core
         features = {}
         # Word features?
         if word_features:
-            if use_core_words:
-                record_words = set(record['core-words'].keys())
+            # Word presence vs. word count
+            if USE_WORD_PRESENCE:
+                if use_core_words:
+                    record_words = set(record['core-words'].keys())
+                else:
+                    record_words = set(record['words'].keys())
+                for word in word_features:
+                    features["contains({})".format(word)] = (word in record_words)
             else:
-                record_words = set(record['words'].keys())
-            for word in word_features:
-                features["contains({})".format(word)] = (word in record_words)
+                if use_core_words:
+                    record_words = record['core-words']
+                else:
+                    record_words = record['words']
+                for word in word_features:
+                    if word in set(record_words.keys()):
+                        word_count = record_words[word]
+                    else:
+                        word_count = 0
+                    features["contains({})".format(word)] = word_count
 
         # Tag features?
         if tag_features:
