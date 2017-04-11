@@ -17,7 +17,7 @@ CLASSIFY_WITH_LIMIT = None
 CLASSIFY_WITH_ACCURACY_WEIGHTS = True
 
 # Set random seed to the one we know
-config.set_random_seed(config.get_random_seed())
+helpers.set_random_seed(config.get_random_seed())
 
 # Get all downloaded training data paths
 (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH) = config.get_training_data_folder_paths()
