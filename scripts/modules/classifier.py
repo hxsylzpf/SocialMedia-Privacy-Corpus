@@ -427,13 +427,13 @@ class EnsemblePrivacyClassifier():
                                                    word_features=word_features,
                                                    tag_features=tag_features,
                                                    use_core_words=use_core_words,
-                                                   include_class=False)
+                                                   include_class=False)[0]
 
         # Build features for keyword classifier
         keyword_features = test_record['title'].lower() + test_record['content'].lower()
 
         # Classify with these features
-        return classify([naive_bayes_features, keyword_features])
+        return self.classify([naive_bayes_features, keyword_features])
 
     # Perform classification from test features
     # We expect test features to be a list [x1, x2] where x1 is the test
