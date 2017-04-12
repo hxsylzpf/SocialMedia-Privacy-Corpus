@@ -2,8 +2,12 @@
     compare_summarizer.py
     Compares the summarizer pre-processing to a commercially available solution
 """
-import os
+# Include the modules from parent directory
 import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
+import os
 from modules import config, helpers, nlp
 
 # Number of sentences to summarize to

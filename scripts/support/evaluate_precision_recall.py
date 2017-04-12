@@ -1,5 +1,9 @@
-import os
+# Include the modules from parent directory
 import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
+import os
 import glob
 from modules import config, helpers
 from modules.classifier import KeywordPrivacyClassifierFactory
