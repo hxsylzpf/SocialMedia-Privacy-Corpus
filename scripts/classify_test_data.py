@@ -15,6 +15,7 @@ print("Finding test data...")
 test_data = glob.glob(DATA_FOLDER_PATH + "/*")
 
 # Load the classifier from file
+print("Loading classifier...")
 filepath = config.get_classifier_pickle_file_path("ensemble")
 (classifier, word_features, tag_features, use_core_words) = classifierlib.load_classifier_from_file(filepath)
 
@@ -38,6 +39,17 @@ for i, td_file in enumerate(test_data):
         pos_class.append(record['id'])
     else:
         neg_class.append(record['id'])
+
+# Write out results to file
+print("Writing out results...")
+(folderpath, yes_id_file, no_id_file) = config.get_classified_test_data_ids_path()
+data.create_data_folder(folderpath)
+with open(yes_id_file, 'w+') as f:
+    f.write("\n".join(pos_class))
+    print("  pos class written to {}".format(yes_id_file))
+with open(no_id_file, 'w+') as f:
+    f.write("\n".join(neg_class))
+    print("  neg class written to {}".format(no_id_file))
 
 # Print out statistics
 print("\nDone!")

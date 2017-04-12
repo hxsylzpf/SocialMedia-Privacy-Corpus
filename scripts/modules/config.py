@@ -71,6 +71,13 @@ def get_classifier_pickle_file_path(classifier_name="classifier"):
     data_folder_path = get_data_folder_base_path()
     return os.path.join(data_folder_path, classifier_name + ".pkl")
 
+# Get filepaths for yes/no classified articles
+def get_classified_test_data_ids_path():
+    data_folder_path = os.path.join(get_data_folder_base_path(), "classified")
+    yes_id_file = os.path.join(data_folder_path, "yes.ids")
+    no_id_file = os.path.join(data_folder_path, "no.ids")
+    return (data_folder_path, yes_id_file, no_id_file)
+
 # Get common random seed
 def get_random_seed():
     return "csc495+591"
