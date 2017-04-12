@@ -51,7 +51,7 @@ if shouldRemove:
 print("Preprocessing...")
 totalPreprocessed = 0
 totalReused = 0
-for i, td_file in enumerate(training_data):
+for i, td_file in enumerate(test_data):
     # Convert json string in file to object
     with open(td_file, 'r') as f:
         record_json = f.read().strip()
@@ -68,7 +68,7 @@ for i, td_file in enumerate(training_data):
         totalReused += 1
 
     # Print progress
-    sys.stdout.write("\r{}/{}".format(i + 1, len(training_data)))
+    sys.stdout.write("\r{}/{}".format(i + 1, len(test_data)))
     sys.stdout.flush()
 
 # Print out statistics
