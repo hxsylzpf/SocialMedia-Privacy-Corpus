@@ -98,18 +98,19 @@ def get_ids_for_query(tags="", keywords="", pageNum=1):
     return (numPages, ids)
 
 # Get content for an article with ID
-def get_title_body_tags_for_article_id(articleId):
+def get_title_lead_body_tags_for_article_id(articleId):
     headers = {
-        "show-fields": "bodyText",
+        "show-fields": "trailText,bodyText",
         "show-tags": "keyword"
     }
     content = theguardian_content.Content(api=api_key, **headers)
     single_id_content = content.find_by_id(articleId)
     res = content.get_results(single_id_content)
     title = str(helpers.sanitize(res[0]['webTitle']))
+    lead = str(helpers.sanitize(res[0]['fields']['trailText']))
     body_text = str(helpers.sanitize(res[0]['fields']['bodyText']))
     tags = [x['id'] for x in res[0]['tags']]
-    return (title, body_text, tags)
+    return (title, lead, body_text, tags)
 
 # Get content that corresponds to headers
 def get_content_response(headers):

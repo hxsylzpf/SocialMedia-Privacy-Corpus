@@ -2,6 +2,7 @@
     helpers.py
     Responsible for miscellenous helper functions
 """
+import re
 import json
 import random
 import hashlib
@@ -39,7 +40,9 @@ def remove_bad_puncutation(text):
 
 # Filters out various html entities that may remain in the text
 def remove_html_entities(text):
-    return text.replace("&nbsp;", ' ')
+    text = text.replace("&nbsp;", ' ')
+    text = re.sub("<\/?\S+>", '', text)
+    return text
 
 # Attempts to filter out related articles from the text
 def remove_related_articles(text):

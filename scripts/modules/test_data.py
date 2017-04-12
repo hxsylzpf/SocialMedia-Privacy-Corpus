@@ -7,11 +7,12 @@ import sys
 from . import api, data, helpers
 
 # Write out a test data record to string
-def get_test_data_record(articleId, title, content, tags):
+def get_test_data_record(articleId, title, lead, content, tags):
     record = {
         'id': articleId,
         'class': None,
         'title': title,
+        'lead': lead,
         'content': content,
         'tags': tags,
         'core-words': None,
@@ -34,8 +35,8 @@ def get_test_data_files_for_ids(ids, hashes, folder, shouldReuse=True, progress=
         # (save API calls) unless told otherwise
         filepath = os.path.join(folder, h)
         if not os.path.exists(filepath) or not shouldReuse:
-            title, content, tags = api.get_title_body_tags_for_article_id(i)
-            record_json = get_test_data_record(i, title, content, tags)
+            title, lead, content, tags = api.get_title_lead_body_tags_for_article_id(i)
+            record_json = get_test_data_record(i, title, lead, content, tags)
             data.write_string_to_file(filepath, record_json)
             numRetrieved = numRetrieved + 1
         else:
