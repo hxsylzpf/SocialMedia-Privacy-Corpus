@@ -2,8 +2,6 @@
     preprocessing.py
     Responsible for performing preprocessing on the data
 """
-from . import nlp
-
 # Checks whether a record (json object) has already been preprocessed
 def is_record_preprocessed(record):
     re = True
@@ -18,6 +16,9 @@ def is_record_preprocessed(record):
 
 # Performs preprocessing. Modifies the record in place
 def preprocess(record, shouldReuse):
+    # Import the nlp library
+    from . import nlp
+
     # Only do preprocessing if it has not already been completed or
     # we are explicitly specified to
     if not is_record_preprocessed(record) or not shouldReuse:

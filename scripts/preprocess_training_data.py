@@ -8,7 +8,7 @@
 """
 import sys
 import glob
-from modules import config, data, helpers
+from modules import config, data, helpers, preprocessing
 
 # If optional parameter "clean" provided, do not reuse existing preprocessing
 shouldReuse = True
@@ -39,7 +39,7 @@ if shouldRemove:
         record = helpers.json_string_to_object(record_json)
 
         # Remove the preprocessing
-        record['core-words'] = None
+        preprocessing.remove_preprocessing(record)
 
         # Write the record back out to its file
         record_json = helpers.json_object_to_string(record)
@@ -47,18 +47,11 @@ if shouldRemove:
     print("Done!")
     sys.exit(0)
 
-# Now load preprocessing library (will load NLP models)
-from modules import preprocessing
-
 # Perform preprocessing on each file and write it back out to the file
 print("Preprocessing...")
 totalPreprocessed = 0
 totalReused = 0
 for i, td_file in enumerate(training_data):
-    # Print progress
-    sys.stdout.write("\r{}/{}".format(i + 1, len(training_data)))
-    sys.stdout.flush()
-
     # Convert json string in file to object
     with open(td_file, 'r') as f:
         record_json = f.read().strip()
@@ -73,6 +66,10 @@ for i, td_file in enumerate(training_data):
         data.write_string_to_file(td_file, record_json)
     else:
         totalReused += 1
+
+    # Print progress
+    sys.stdout.write("\r{}/{}".format(i + 1, len(training_data)))
+    sys.stdout.flush()
 
 # Print out statistics
 print("\nDone!")
