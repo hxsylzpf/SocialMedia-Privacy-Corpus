@@ -15,7 +15,7 @@ else:
     shouldReuse = True
 
 # Data folders
-DATA_FOLDER_PATH = config.get_test_data_folder_paths()
+DATA_FOLDER_PATH = config.get_test_data_folder_path()
 
 # Form data directory structure
 print("Verifying directory structure...")
