@@ -22,11 +22,12 @@ def preprocess(record, shouldReuse):
     # Only do preprocessing if it has not already been completed or
     # we are explicitly specified to
     if not is_record_preprocessed(record) or not shouldReuse:
-        # Pull out the core words from the article
         title = record['title']
+        lead = record['lead']
         content = record['content']
+        # Pull out the core words from the article
         summarized = nlp.summarize(title, content)
-        core_words = nlp.top_words(summarized)
+        core_words = nlp.top_words(title, lead, summarized)
         record['core-words'] = core_words
         # Pull out the article words
         all_words = nlp.all_words(content)

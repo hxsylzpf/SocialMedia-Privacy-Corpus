@@ -61,10 +61,13 @@ def summarize(title, text, nLargest=10):
         for token in sent_tokens:
             # tf --> Use raw relative frequencies
             tf = lemma_counts[token] / float(sum(lemma_counts.values()))
+            # idf
+            # TODO: may not make sense for this application
+            idf = 1
             # Give a bonus to this word if it appears in the title
             if token in title_lemmas:
                 tf *= 1.1
-            score += tf
+            score += (tf * idf)
         sentence_scores[i] = score
 
     # Print out top N sentences in order
@@ -74,8 +77,12 @@ def summarize(title, text, nLargest=10):
 
 # Pull out the top words from text, where the words are not stopwords or
 # puncutation or whitespace.
-def top_words(text, n=None):
-    doc = nlp(text)
+def top_words(title, lead, text):
+    # Combine the title, lead, and text into a single string
+    to_process = "\n".join([title, lead, text])
+
+    # Parse
+    doc = nlp(to_process)
 
      # lemmatize
     tokens = [str(t.lemma_).lower() for t in doc if is_valid_token(t)]
@@ -86,13 +93,15 @@ def top_words(text, n=None):
 
     # Take the most frequent
     return Counter(tokens)
-    freq_counts = Counter(tokens)
-    return [x[0] for x in freq_counts.most_common(n)]
 
 # Pull out all unique words from the text, where the words are not stopwords or
 # puncutation or whitespace
-def all_words(text):
-    doc = nlp(text)
+def all_words(title, lead, text):
+    # Combine the title, lead, and text into a single string
+    to_process = "\n".join([title, lead, text])
+
+    # Parse
+    doc = nlp(to_process)
 
      # lemmatize
     tokens = [str(t.lemma_).lower() for t in doc if is_valid_token(t)]
