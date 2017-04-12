@@ -35,8 +35,8 @@ def get_training_data_folder_paths():
     no_folder_path = os.path.join(data_folder_path, "no")
     return (data_folder_path, yes_folder_path, no_folder_path)
 
-# Get the test data folder paths
-def get_test_data_folder_paths():
+# Get the test data folder path
+def get_test_data_folder_path():
     data_folder_path = os.path.join(get_data_folder_base_path(), "test_data")
     return data_folder_path
 
