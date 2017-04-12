@@ -1,8 +1,11 @@
 # API key
 api_key
 
-# Training Data
+# Data store
 data
+
+# Example library
+document_cluster/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

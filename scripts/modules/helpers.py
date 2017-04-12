@@ -72,3 +72,7 @@ def average(alist):
 # Sets the random seed
 def set_random_seed(seed):
     random.seed(seed)
+
+# Convert a string to an integer
+def string_to_int(string):
+    return int.from_bytes(string.encode('utf-8'), 'little')

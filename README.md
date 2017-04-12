@@ -4,7 +4,7 @@ Privacy project with Kylie Geller
 ## Setup (Ubuntu)
 Install system level prerequisites:
 
-    sudo apt-get install build-essential python3-dev
+    sudo apt-get install build-essential python3-dev python3-tk
 
 Recommend using a virtual environment:
 
