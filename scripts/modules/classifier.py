@@ -307,20 +307,31 @@ class KeywordPrivacyClassifierFactory(PrivacyClassifierFactory):
 
 # Keyword classifier
 class KeywordPrivacyClassifier():
-    # Names of social medias
-    social_medias = ["facebook", "snapchat", "twitter", "instagram", "linkedin",
-        "reddit", "whatsapp", "google+", "myspace", "tumblr", "pinterest",
-        "hangouts"]
+    # Privacy keywords
+    privacy_keywords = ["privacy"]
 
-    # Keywords to look for. Each list is an OR, the list of lists is an AND.
-    keywords = [["privacy"], ["social media"] + social_medias]
+    # Names of social medias
+    social_media_keywords = ["social media", "facebook", "snapchat", "twitter",
+        "instagram", "linkedin", "reddit", "whatsapp", "google+", "myspace",
+        "tumblr", "pinterest", "hangouts", "social network"]
+
+    # Privacy threshold
+    privacy_threshold = 0
+
+    # Social media threshold
+    social_media_threshold = 0
 
     def classify(self, content):
-        for keyword_list in self.keywords:
-            count = sum(1 for keyword in keyword_list if keyword in content.lower())
-            if count == 0:
-                return False
-        return True
+        # Check privacy
+        privacy_count = sum(content.lower().count(keyword) for keyword in self.privacy_keywords)
+        # Check social media
+        social_count = sum(content.lower().count(keyword) for keyword in self.social_media_keywords)
+
+        # Want privacy to be present (>0), social media to be common (>1)
+        if privacy_count > self.privacy_threshold and social_count > self.social_media_threshold:
+            return True
+        else:
+            return False
 
 """ Tag """
 # Tag classifier factory
