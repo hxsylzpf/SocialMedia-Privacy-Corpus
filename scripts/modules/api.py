@@ -107,7 +107,7 @@ def get_title_lead_body_tags_for_article_id(articleId):
     single_id_content = content.find_by_id(articleId)
     res = content.get_results(single_id_content)
     title = str(helpers.sanitize(res[0]['webTitle']))
-    lead = str(helpers.sanitize(res[0]['fields']['trailText']))
+    lead = str(helpers.sanitize(res[0]['fields']['trailText'] if 'trailText' in res[0]['fields'] else ""))
     body_text = str(helpers.sanitize(res[0]['fields']['bodyText']))
     tags = [x['id'] for x in res[0]['tags']]
     return (title, lead, body_text, tags)
