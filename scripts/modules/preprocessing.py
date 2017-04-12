@@ -30,7 +30,7 @@ def preprocess(record, shouldReuse):
         core_words = nlp.top_words(title, lead, summarized)
         record['core-words'] = core_words
         # Pull out the article words
-        all_words = nlp.all_words(content)
+        all_words = nlp.all_words(title, lead, content)
         record['words'] = all_words
         return True
     else:
