@@ -7,7 +7,6 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from modules import config, helpers, sentiment
-
 import plotly
 from plotly import tools
 import plotly.graph_objs as go
@@ -47,7 +46,7 @@ if SENTIMENT_ALL_ARTICLES:
     neutrals = [x['neu'] for x in sentiments]
     # Plot
     trace1 = go.Bar(x=positives, y=titles, name='Positive', orientation='h', marker=dict(color='rgb(0, 190, 75)'))
-    trace2 = go.Bar(x=neutrals, y=titles, name='Neutral', orientation='h', marker=dict(color='rgb(255, 175, 0)'))
+    trace2 = go.Bar(x=neutrals, y=titles, name='Neutral', orientation='h', marker=dict(color='rgb(215, 215, 215)'))
     trace3 = go.Bar(x=negatives, y=titles, name='Negative', orientation='h', marker=dict(color='rgb(255, 75, 75)'))
     layout = go.Layout(
         barmode='stack',
