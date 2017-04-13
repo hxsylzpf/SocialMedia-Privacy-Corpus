@@ -35,17 +35,20 @@ if SENTIMENT_ALL_ARTICLES:
         sentiments.append({
             'id': record['id'],
             'title': record['title'],
-            'pos': sentiment_scores['pos'] / (sentiment_scores['pos'] + sentiment_scores['neg']),
-            'neg': sentiment_scores['neg'] / (sentiment_scores['pos'] + sentiment_scores['neg'])
+            'pos': sentiment_scores['pos'],
+            'neg': sentiment_scores['neg'],
+            'neu': sentiment_scores['neu']
         })
     # Sort by positive sentiment
-    sentiments = sorted(sentiments, key=lambda x: x['pos'])
+    sentiments = sorted(sentiments, key=lambda x: x['neu'])
     titles = [x['title'] for x in sentiments]
     positives = [x['pos'] for x in sentiments]
     negatives = [x['neg'] for x in sentiments]
+    neutrals = [x['neu'] for x in sentiments]
     # Plot
     trace1 = go.Bar(x=positives, y=titles, name='Positive', orientation='h', marker=dict(color='rgb(0, 190, 75)'))
-    trace2 = go.Bar(x=negatives, y=titles, name='Negative', orientation='h', marker=dict(color='rgb(255, 75, 75)'))
+    trace2 = go.Bar(x=neutrals, y=titles, name='Neutral', orientation='h', marker=dict(color='rgb(255, 175, 0)'))
+    trace3 = go.Bar(x=negatives, y=titles, name='Negative', orientation='h', marker=dict(color='rgb(255, 75, 75)'))
     layout = go.Layout(
         barmode='stack',
         xaxis=dict(
@@ -58,12 +61,7 @@ if SENTIMENT_ALL_ARTICLES:
             showticklabels=False
         ),
         showlegend=True,
-        margin=dict(
-            l=120,
-            r=10,
-            t=140,
-            b=80
-        ),
+        title="Corpus Sentiments"
     )
     annotations = []
     for s in sentiments:
@@ -72,8 +70,8 @@ if SENTIMENT_ALL_ARTICLES:
             x=0.14, y=s['title'], text=str(s['title']),
             xanchor='right', align='right',
         ))
-    layout['annotations'] = annotations
-    fig = go.Figure(data=[trace1, trace2], layout=layout)
+    # layout['annotations'] = annotations
+    fig = go.Figure(data=[trace1, trace2, trace3], layout=layout)
     plotly.offline.plot(fig, filename=config.get_plotly_path())
 
     # fig, ax = plt.subplots(figsize=(17, 9))
