@@ -78,6 +78,19 @@ def get_classified_test_data_ids_path():
     no_id_file = os.path.join(data_folder_path, "no.ids")
     return (data_folder_path, yes_id_file, no_id_file)
 
+# Get filepaths to corpus articles
+def get_corpus_ids_path():
+    corpus_data_path = os.path.abspath(
+                            os.path.join(
+                                os.path.dirname(os.path.realpath(__file__)),
+                                "../../corpus"))
+    id_file = os.path.join(corpus_data_path, "ids")
+    return (corpus_data_path, id_file)
+
+# Get plotly dump path
+def get_plotly_path():
+    return os.path.join(get_data_folder_base_path(), "plot.html")
+
 # Get common random seed
 def get_random_seed():
     return "csc495+591"
