@@ -2,6 +2,7 @@
     summarize_corpus.py
     Performs various summarization tasks on the corpus.
 """
+import re
 import os
 import sys
 import numpy as np
@@ -10,9 +11,15 @@ from modules import config, helpers, sentiment
 import plotly
 from plotly import tools
 import plotly.graph_objs as go
+from operator import itemgetter
+from collections import Counter
+from datetime import datetime
+from dateutil import relativedelta
 
 # Enable/disable certain features in this script
-SENTIMENT_ALL_ARTICLES = True
+SENTIMENT_ALL_ARTICLES = False
+ARTICLES_PER_MONTH = True
+PLATFORM_FREQUENCY = False
 
 # Load the corpus records
 data_folder = config.get_test_data_folder_path()
@@ -73,11 +80,116 @@ if SENTIMENT_ALL_ARTICLES:
     fig = go.Figure(data=[trace1, trace2, trace3], layout=layout)
     plotly.offline.plot(fig, filename=config.get_plotly_path())
 
-    # fig, ax = plt.subplots(figsize=(17, 9))
-    # p1 = ax.barh(indices, positives, color=(0, 0.75, 0.25))
-    # p2 = ax.barh(indices, negatives, left=positives, color=(1, .25, .25))
-    # ax.set_title("Corpus Sentiment")
-    # ax.set_xticklabels(())
-    # ax.set_yticklabels([x['title'] for x in sentiments])
-    # ax.legend((p1[0], p2[0]), ('Positive', 'Negative'))
-    # plt.show()
+""" Stats on the number of articles per month """
+if ARTICLES_PER_MONTH:
+    # Pull the date from the article ID. Article IDs are in the format:
+    #   {section}/{OPTIONAL author}/{year}/{month}/{day}/{...}
+    def get_year_month_from_articleId(articleId):
+        matches = re.match("\S+\/(20\d\d\/\w+)\/\d\d\/\S+", articleId)
+        if matches:
+            date = datetime.strptime(matches.group(1), '%Y/%b')
+            return date
+
+    # Get all dates from each article
+    dates = []
+    for record in corpus_records:
+        dates.append(get_year_month_from_articleId(record['id']))
+    # Get date frequency
+    frequencies = Counter(dates)
+    sorted_frequencies = sorted(frequencies.items(), key=itemgetter(0))
+    backfilled_frequencies = []
+    for i, freq in enumerate(sorted_frequencies):
+        if i > 0:
+            last_month = sorted_frequencies[i - 1][0]
+            while last_month != freq[0]:
+                last_month = last_month + relativedelta.relativedelta(months=1)
+                backfilled_frequencies.append((last_month, 0))
+        backfilled_frequencies.append(freq)
+
+    # Print out results
+    print("month,count")
+    for freq in backfilled_frequencies:
+        month_string = freq[0].strftime('%m/%Y')
+        print("{},{}".format(month_string, freq[1]))
+    print()
+    average = len(dates)/len(backfilled_frequencies)
+    print("Average={}".format(average))
+    trace = plotly.graph_objs.Heatmap(
+        z=[[x[1] for x in backfilled_frequencies]],
+        x=[x[0] for x in backfilled_frequencies],
+        y=['1', '2'],
+        colorscale='Reds',
+        reversescale=False,
+        # showscale=False,
+    )
+    annotations = []
+    for freq in sorted_frequencies:
+        annotations.append(dict(
+            text=freq[1],
+            x=freq[0],
+            y=['1'],
+            xref='x1', yref='y1',
+            showarrow=False,
+            font=dict(color='black',size=24),
+        ))
+    fig = plotly.graph_objs.Figure(data=[trace])
+    fig['layout'].update(
+        title='Monthly Frequency of Social Media Privacy Incidents in Corpus',
+        font=dict(color='black',size=24),
+        xaxis=dict(ticks='', side='top', autotick=True, tickfont=dict(color='black',size=18)),
+        yaxis=dict(ticks='', autotick=False, showticklabels=False),
+        # annotations=annotations,
+        width=1250,
+        height=350,
+    )
+    plotly.offline.plot(fig, filename=config.get_plotly_path())
+
+""" Frequency of incidents per platform """
+if PLATFORM_FREQUENCY:
+    # Compute counts
+    platform_counts = []
+    social_media_platforms = ["Facebook", "Snapchat", "Twitter",
+        "Instagram", "LinkedIn", "Reddit", "WhatsApp", "Google+", "Myspace",
+        "Tumblr", "Pinterest", "Hangouts"]
+    for platform in social_media_platforms:
+        counts = { 'platform': platform, 'total_count': 0, 'presence_count': 0 }
+        for record in corpus_records:
+            text = "\n".join([record['title'], record['lead'], record['content']]).lower()
+            count = text.count(platform.lower())
+            counts['total_count'] += count
+            counts['presence_count'] += 1 if count > 0 else 0
+        platform_counts.append(counts)
+    # Print out statistics
+    print("platform,total,unique")
+    for counts in platform_counts:
+        print("{},{},{}".format(counts['platform'], counts['total_count'], counts['presence_count']))
+    # Generate heatmap
+    trace = plotly.graph_objs.Heatmap(
+        z=[[x['presence_count'] for x in platform_counts]],
+        x=[x['platform'] for x in platform_counts],
+        y=['1', '2'],
+        colorscale='Reds',
+        reversescale=False,
+        # showscale=False,
+    )
+    annotations = []
+    for count in platform_counts:
+        annotations.append(dict(
+            text=count['presence_count'],
+            x=count['platform'],
+            y=['1'],
+            xref='x1', yref='y1',
+            showarrow=False,
+            font=dict(color='black',size=24),
+        ))
+    fig = plotly.graph_objs.Figure(data=[trace])
+    fig['layout'].update(
+        title='Relative Prevalence of Social Media Platforms in Corpus',
+        font=dict(color='black',size=24),
+        xaxis=dict(ticks='', side='top', autotick=False, tickfont=dict(color='black',size=18)),
+        yaxis=dict(ticks='', autotick=False, showticklabels=False),
+        annotations=annotations,
+        width=1250,
+        height=350,
+    )
+    plotly.offline.plot(fig, filename=config.get_plotly_path())
