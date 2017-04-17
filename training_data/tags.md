@@ -26,7 +26,7 @@ Listed below are relevant tags for this project. Tags were found by finding rele
 
 The following logical query was used to pull articles:
 
-    (world/privacy OR info/privacy OR media/privacy OR technology/data-protection OR technology/hacking media/advertising) AND
+    (world/privacy OR info/privacy OR media/privacy OR technology/data-protection OR technology/hacking OR media/advertising) AND
     (media/social-media OR media/socialnetworking OR technology/facebook OR technology/snapchat OR technology/twitter OR technology/instagram OR technology/linkedin OR technology/reddit OR technology/whatsapp OR technology/google-plus OR technology/myspace OR technology/tumblr OR technology/pinterest)
 
 Which translates into the following actual query using the `content_from_tags.py` script:
