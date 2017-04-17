@@ -5,7 +5,7 @@ api_key
 data
 
 # Example library
-document_cluster/*
+document_cluster/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
