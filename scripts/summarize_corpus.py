@@ -12,14 +12,18 @@ import plotly
 from plotly import tools
 import plotly.graph_objs as go
 from operator import itemgetter
-from collections import Counter
+from collections import Counter, defaultdict
 from datetime import datetime
 from dateutil import relativedelta
+from scipy.sparse import csr_matrix
+from scipy.cluster.hierarchy import fcluster, linkage, dendrogram
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Enable/disable certain features in this script
 SENTIMENT_ALL_ARTICLES = False
-ARTICLES_PER_MONTH = True
+ARTICLES_PER_MONTH = False
 PLATFORM_FREQUENCY = False
+HIERARCHICAL_CLUSTERING = True
 
 # Load the corpus records
 data_folder = config.get_test_data_folder_path()
@@ -180,16 +184,75 @@ if PLATFORM_FREQUENCY:
             y=['1'],
             xref='x1', yref='y1',
             showarrow=False,
-            font=dict(color='black',size=24),
+            font=dict(color='black',size=20),
         ))
     fig = plotly.graph_objs.Figure(data=[trace])
     fig['layout'].update(
         title='Relative Prevalence of Social Media Platforms in Corpus',
-        font=dict(color='black',size=24),
-        xaxis=dict(ticks='', side='top', autotick=False, tickfont=dict(color='black',size=18)),
+        font=dict(color='black',size=20),
+        xaxis=dict(ticks='', side='top', autotick=False, tickfont=dict(color='black',size=16)),
         yaxis=dict(ticks='', autotick=False, showticklabels=False),
         annotations=annotations,
         width=1250,
         height=350,
     )
     plotly.offline.plot(fig, filename=config.get_plotly_path())
+
+if HIERARCHICAL_CLUSTERING:
+    # Convert core word data to CSR matrix as below
+    #
+    #    Article1   Word1   Count                       Word1   Word2   Word3   ...
+    #    Article1   Word2   Count    ===>  Article1     Count   Count   Count
+    #    Article2   Word1   Count          Article2     Count   Count   Count
+    #    ...                               ...
+    #
+    matrix_rows = []
+    all_core_words = list(set([x for record in corpus_records for x in record['words'].keys()]))
+    for record_num, record in enumerate(corpus_records):
+        for word_num, word in enumerate(all_core_words):
+            row = [record_num, word_num, record['words'][word] if word in record['words'] else 0]
+            matrix_rows.append(row)
+    matrix_array = np.asarray(matrix_rows)
+    matrix = csr_matrix((matrix_array[:, 2], (matrix_array[:, 0], matrix_array[:, 1])))
+
+    # Clustering
+    dist = 1 - cosine_similarity(matrix)
+    linkage_matrix = linkage(dist, method='ward')
+    fig, ax = plt.subplots(figsize=(15, 20)) # set size
+    ax = dendrogram(
+        linkage_matrix,
+        orientation="right",
+        labels=[x['title'] for x in corpus_records],
+        color_threshold=0.7*max(linkage_matrix[:,2]));
+    plt.tick_params(\
+        axis= 'x',          # changes apply to the x-axis
+        which='both',      # both major and minor ticks are affected
+        bottom='off',      # ticks along the bottom edge are off
+        top='off',         # ticks along the top edge are off
+        labelbottom='off')
+    plt.tight_layout()
+    # plt.show()
+    plt.savefig(config.get_matplotlib_path())
+
+    # Get words per color - http://www.nxn.se/valent/extract-cluster-elements-by-color-in-python
+    cluster_idxs = defaultdict(list)
+    for c, pi in zip(ax['color_list'], ax['icoord']):
+        for leg in pi[1:3]:
+            i = (leg - 5.0) / 10.0
+            if abs(i - int(i)) < 1e-5:
+                cluster_idxs[c].append(int(i))
+    cluster_classes = {}
+    for c, l in cluster_idxs.items():
+        i_l = [ax['ivl'][i] for i in l]
+        cluster_classes[c] = [record for record in corpus_records if record['title'] in i_l]
+    top_core_words = {}
+    for c, cluster_records in cluster_classes.items():
+        cluster_core_words_dicts = [record['words'] for record in cluster_records]
+        cluster_core_words_counters = [Counter(d) for d in cluster_core_words_dicts]
+        cluster_core_words = sum(cluster_core_words_counters, Counter())
+        top_core_words[c] = [w for w, wc in cluster_core_words.most_common(35)]
+    for c, top_words in top_core_words.items():
+        others = set(sum([v for k, v in top_core_words.items() if k != c], []))
+        disjoint = set(top_words) - others
+        ordered_disjoint = [x for x in top_words if x in disjoint]
+        print("{}: {}".format(c, ordered_disjoint))

@@ -91,6 +91,10 @@ def get_corpus_ids_path():
 def get_plotly_path():
     return os.path.join(get_data_folder_base_path(), "plot.html")
 
+# Get matplotlib dump path
+def get_matplotlib_path():
+    return os.path.join(get_data_folder_base_path(), "fig.png")
+
 # Get common random seed
 def get_random_seed():
     return "csc495+591"
