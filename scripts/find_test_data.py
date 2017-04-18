@@ -63,6 +63,7 @@ if (print_to_file == "true") :
     with open(id_path, "a") as f:
         to_append = "\n".join(ids_to_be_added)
         f.write(to_append)
+        f.write('\n')
 elif (print_to_file == "false"):
     to_print = "\n".join(ids_to_be_added)
     print(to_print)
