@@ -18,12 +18,16 @@ from dateutil import relativedelta
 from scipy.sparse import csr_matrix
 from scipy.cluster.hierarchy import fcluster, linkage, dendrogram
 from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.manifold import MDS
 
 # Enable/disable certain features in this script
 SENTIMENT_ALL_ARTICLES = False
 ARTICLES_PER_MONTH = False
 PLATFORM_FREQUENCY = False
-HIERARCHICAL_CLUSTERING = True
+HIERARCHICAL_CLUSTERING = False
+KMEANS_CLUSTERING = True
 
 # Load the corpus records
 data_folder = config.get_test_data_folder_path()
@@ -198,6 +202,7 @@ if PLATFORM_FREQUENCY:
     )
     plotly.offline.plot(fig, filename=config.get_plotly_path())
 
+""" Hierarchical Clustering """
 if HIERARCHICAL_CLUSTERING:
     # Convert core word data to CSR matrix as below
     #
@@ -256,3 +261,76 @@ if HIERARCHICAL_CLUSTERING:
         disjoint = set(top_words) - others
         ordered_disjoint = [x for x in top_words if x in disjoint]
         print("{}: {}".format(c, ordered_disjoint))
+
+""" K-Means Clustering """
+if KMEANS_CLUSTERING:
+    # Convert word data to CSR matrix as below
+    #
+    #    Article1   Word1   Count                       Word1   Word2   Word3   ...
+    #    Article1   Word2   Count    ===>  Article1     Count   Count   Count
+    #    Article2   Word1   Count          Article2     Count   Count   Count
+    #    ...                               ...
+    #
+    matrix_rows = []
+    all_core_words = list(set([x for record in corpus_records for x in record['core-words'].keys()]))
+    for record_num, record in enumerate(corpus_records):
+        for word_num, word in enumerate(all_core_words):
+            row = [record_num, word_num, record['core-words'][word] if word in record['core-words'] else 0]
+            matrix_rows.append(row)
+    matrix_array = np.asarray(matrix_rows)
+    matrix = csr_matrix((matrix_array[:, 2], (matrix_array[:, 0], matrix_array[:, 1])))
+
+    # Clustering. Use k-means++ to initialize cluster. Use parallel computation.
+    num_clusters = 5
+    km = KMeans(n_clusters=num_clusters, init='k-means++', n_jobs=-1)
+    km.fit(matrix)
+
+    # Print out per-cluster info
+    clusters = km.labels_.tolist()
+    articles = { 'id': [record['id'] for record in corpus_records], 'cluster': clusters }
+    frame = pd.DataFrame(articles, index=[clusters], columns=['id', 'cluster'])
+    print(frame['cluster'].value_counts())
+
+    # Print out top words per cluster
+    top_core_words = {}
+    for i in range(num_clusters):
+        cluster_records = [corpus_records[j] for j in range(len(corpus_records)) if clusters[j] == i]
+        cluster_core_words_dicts = [record['core-words'] for record in cluster_records]
+        cluster_core_words_counters = [Counter(d) for d in cluster_core_words_dicts]
+        cluster_core_words = sum(cluster_core_words_counters, Counter())
+        top_core_words[i] = [w for w, wc in cluster_core_words.most_common(30)]
+    for c, top_words in top_core_words.items():
+        others = set(sum([v for k, v in top_core_words.items() if k != c], []))
+        disjoint = set(top_words) - others
+        ordered_disjoint = [x for x in top_words if x in disjoint]
+        print("{}: {}".format(c, ordered_disjoint))
+
+    # Make a visual plot using MDS
+    mds = MDS(n_components=2, dissimilarity="precomputed", random_state=1)
+    dist = 1 - cosine_similarity(matrix)
+    pos = mds.fit_transform(dist)
+    xs, ys = pos[:, 0], pos[:, 1]
+    cluster_colors = {0: '#F44336', 1: '#3F51B5', 2: '#4CAF50', 3: '#FFC107', 4: '#00BCD4' }#, 5: '#9C27B0'}
+    cluster_names = {0: '1', 1: '2', 2: '3', 3: '4', 4: '5'}#, 5: '6'}
+    df = pd.DataFrame(dict(x=xs, y=ys, label=clusters, id=[record['id'] for record in corpus_records]))
+    groups = df.groupby('label')
+    fig, ax = plt.subplots(figsize=(17, 9)) # set size
+    ax.margins(0.05) # Optional, just adds 5% padding to the autoscaling
+    for name, group in groups:
+        ax.plot(group.x, group.y, marker='o', linestyle='', ms=12, label=cluster_names[name], color=cluster_colors[name], mec='none')
+        ax.set_aspect('auto')
+        ax.tick_params(\
+            axis= 'x',          # changes apply to the x-axis
+            which='both',      # both major and minor ticks are affected
+            bottom='off',      # ticks along the bottom edge are off
+            top='off',         # ticks along the top edge are off
+            labelbottom='off')
+        ax.tick_params(\
+            axis= 'y',         # changes apply to the y-axis
+            which='both',      # both major and minor ticks are affected
+            left='off',      # ticks along the bottom edge are off
+            top='off',         # ticks along the top edge are off
+            labelleft='off')
+    ax.legend(numpoints=1)  #show legend with only 1 point
+    plt.savefig(config.get_matplotlib_path(), dpi=300)
+    plt.show()
