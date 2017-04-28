@@ -1,11 +1,14 @@
 # Social Media Privacy Corpus
-Privacy class project to use machine learning to build a social media privacy corpus. Involves building and evaluating various classifiers and then using statistical methods and clustering to perform analysis on the resulting corpus.
+Privacy class project to use machine learning to build a social media privacy corpus. Involves building and evaluating various classifiers and then using statistical methods and clustering to perform analysis on the resulting corpus. Utilizes The Guardian API.
 
 ## Contributors
-Michael Meli (@[mjmeli](https://github.com/mjmeli)) and Kylie Geller (@[kgeller](https://github.com/kgeller))
+Michael Meli ([mjmeli](https://github.com/mjmeli)) and Kylie Geller ([kgeller](https://github.com/kgeller))
 
 ## Requirements
 Python 3 only
+
+## API Key
+As we use The Guardian API, be sure to request a free API key from [The Guardian Open Platform](http://open-platform.theguardian.com/) if you wish to touch the API. 
 
 ## Setup (Ubuntu)
 Install system level prerequisites:
