@@ -1,5 +1,8 @@
-# privacy
-Privacy project with Kylie Geller
+# Social Media Privacy Corpus
+Privacy class project to use machine learning to build a social media privacy corpus. Involves building and evaluating various classifiers and then using statistical methods and clustering to perform analysis on the resulting corpus.
+
+## Contributors
+Michael Meli (@mjmeli), Kylie Geller (@kgeller)
 
 ## Requirements
 Python 3 only
