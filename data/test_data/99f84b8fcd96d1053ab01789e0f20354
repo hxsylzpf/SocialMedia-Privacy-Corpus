@@ -1,0 +1,33 @@
+{
+  "lead": "At the News Innovation conference in London, Toby Moores, a Visiting Professor of the Institute of Creative Technology  at De Montfort University, says future of news is in conversation",
+  "id": "media/pda/2009/jul/10/digital-media-socialnetworking",
+  "words": {
+    "visiting": 1,
+    "future": 2,
+    "conference": 1,
+    "conversation": 2,
+    "news": 2,
+    "professor": 1,
+    "see": 1,
+    "content": 1,
+    "say": 1
+  },
+  "title": "Toby Moores sees future for news in content and conversation",
+  "core-words": {
+    "visiting": 1,
+    "future": 2,
+    "conference": 1,
+    "conversation": 2,
+    "news": 2,
+    "professor": 1,
+    "see": 1,
+    "content": 1,
+    "say": 1
+  },
+  "class": null,
+  "tags": [
+    "media/digital-media",
+    "media/socialnetworking"
+  ],
+  "content": ""
+}

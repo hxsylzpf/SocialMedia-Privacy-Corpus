@@ -1,0 +1,48 @@
+{
+  "class": null,
+  "words": {
+    "tell": 1,
+    "make": 1,
+    "weird": 1,
+    "quiz": 1,
+    "fun": 1,
+    "difference": 1,
+    "page": 1,
+    "headline": 2,
+    "fake": 2,
+    "spot": 1,
+    "new": 1,
+    "comment": 2,
+    "blog": 1,
+    "amid": 1,
+    "real": 2
+  },
+  "core-words": {
+    "tell": 1,
+    "make": 1,
+    "weird": 1,
+    "quiz": 1,
+    "fun": 1,
+    "difference": 1,
+    "page": 1,
+    "headline": 2,
+    "fake": 2,
+    "spot": 1,
+    "new": 1,
+    "comment": 2,
+    "blog": 1,
+    "amid": 1,
+    "real": 2
+  },
+  "title": "Quiz: Is comment weird? Spot the real Guardian headlines amid the fakes",
+  "id": "news/blog/quiz/2015/may/01/guardian-headlines-comment-is-weird-quiz",
+  "tags": [
+    "media/australia-media",
+    "media/theguardian",
+    "technology/technology",
+    "media/social-media",
+    "media/media"
+  ],
+  "content": "",
+  "lead": "A new Tumblr blog has been making fun of the Guardian's comment pages \u2013 but can you tell the difference between the real headlines and the fakes?"
+}

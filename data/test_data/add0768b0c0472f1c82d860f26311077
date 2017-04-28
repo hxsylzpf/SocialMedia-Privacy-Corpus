@@ -1,0 +1,38 @@
+{
+  "lead": "A million dollars isn't cool. Do you know what is cool? Try our quiz to find out.",
+  "id": "technology/quiz/2014/jan/24/how-rich-richest-billionaires-tech",
+  "words": {
+    "quiz": 1,
+    "billionaire": 1,
+    "find": 1,
+    "tech": 1,
+    "test": 1,
+    "try": 1,
+    "cool": 2,
+    "know": 1,
+    "rich": 2,
+    "knowledge": 1
+  },
+  "title": "Just how rich are the richest billionaires in tech? Test your knowledge",
+  "core-words": {
+    "quiz": 1,
+    "billionaire": 1,
+    "find": 1,
+    "tech": 1,
+    "test": 1,
+    "try": 1,
+    "cool": 2,
+    "know": 1,
+    "rich": 2,
+    "knowledge": 1
+  },
+  "class": null,
+  "tags": [
+    "technology/sheryl-sandberg",
+    "technology/facebook",
+    "technology/billgates",
+    "technology/google",
+    "technology/technology"
+  ],
+  "content": ""
+}

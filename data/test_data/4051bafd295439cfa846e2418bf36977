@@ -1,0 +1,35 @@
+{
+  "lead": "Follow Benji Lanyado as he live blogs his way around Cologne using your tips gleaned from Twitter.",
+  "id": "travel/2011/mar/17/twitrip-cologne-twitter",
+  "words": {
+    "lanyado": 1,
+    "follow": 1,
+    "benji": 1,
+    "tip": 1,
+    "way": 1,
+    "twitrip": 1,
+    "blogs": 1,
+    "live": 2,
+    "glean": 1
+  },
+  "title": "LIVE: TwiTrip to Cologne",
+  "core-words": {
+    "lanyado": 1,
+    "follow": 1,
+    "benji": 1,
+    "tip": 1,
+    "way": 1,
+    "twitrip": 1,
+    "blogs": 1,
+    "live": 2,
+    "glean": 1
+  },
+  "class": null,
+  "tags": [
+    "travel/cologne",
+    "travel/germany",
+    "travel/travel",
+    "technology/twitter"
+  ],
+  "content": ""
+}

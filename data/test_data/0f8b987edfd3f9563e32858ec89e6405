@@ -1,0 +1,50 @@
+{
+  "lead": "From the prime minister's porcine university shenanigans, to Donald Trump making a consistent fool of himself, we vote for our favourite political tweets of the year",
+  "id": "technology/2015/dec/31/political-tweets-of-the-year-2015",
+  "words": {
+    "shenanigan": 1,
+    "porcine": 1,
+    "consistent": 1,
+    "year": 1,
+    "vote": 1,
+    "make": 1,
+    "prime": 1,
+    "fool": 1,
+    "tweet": 2,
+    "minister": 1,
+    "pig": 1,
+    "favourite": 1,
+    "university": 1,
+    "political": 2
+  },
+  "title": "Donald Trump, David Cameron and \u2026 a pig \u2013 the political tweets of 2015",
+  "core-words": {
+    "shenanigan": 1,
+    "porcine": 1,
+    "consistent": 1,
+    "year": 1,
+    "vote": 1,
+    "make": 1,
+    "prime": 1,
+    "fool": 1,
+    "tweet": 2,
+    "minister": 1,
+    "pig": 1,
+    "favourite": 1,
+    "university": 1,
+    "political": 2
+  },
+  "class": null,
+  "tags": [
+    "technology/twitter",
+    "technology/technology",
+    "technology/internet",
+    "us-news/donaldtrump",
+    "us-news/republicans",
+    "politics/davidcameron",
+    "politics/politics",
+    "politics/labour",
+    "politics/jeremy-corbyn"
+  ],
+  "content": "1. 2. 3. 4. 5. 6. 7. 8. 9. 10. 11. 12. 13. 14. 15. 16. 17. 18. 19. 20."
+}

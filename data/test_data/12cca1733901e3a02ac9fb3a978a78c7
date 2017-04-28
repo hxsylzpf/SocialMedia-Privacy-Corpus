@@ -1,0 +1,47 @@
+{
+  "lead": "What's that brown, toxic substance boggign down Twitter's fail whale? By Jemima Kiss",
+  "id": "media/pda/2010/jun/15/twitter-bp",
+  "class": null,
+  "title": "Has BP brought Twitter down?",
+  "core-words": {
+    "start": 1,
+    "hashtag": 1,
+    "substance": 1,
+    "@kmob": 1,
+    "head": 1,
+    "brown": 1,
+    "fail": 1,
+    "bring": 1,
+    "toxic": 1,
+    "boggign": 1,
+    "bpsfault": 1,
+    "whale": 1,
+    "blame": 1,
+    "answer": 1
+  },
+  "words": {
+    "start": 1,
+    "hashtag": 1,
+    "substance": 1,
+    "@kmob": 1,
+    "head": 1,
+    "brown": 1,
+    "fail": 1,
+    "bring": 1,
+    "toxic": 1,
+    "boggign": 1,
+    "bpsfault": 1,
+    "whale": 1,
+    "blame": 1,
+    "answer": 1
+  },
+  "tags": [
+    "media/media",
+    "media/digital-media",
+    "business/bp",
+    "environment/bp-oil-spill",
+    "technology/twitter",
+    "media/socialnetworking"
+  ],
+  "content": "No, is the answer, but if blame is heading anywhere, it's there. Has nobody started the hashtag #bpsfault yet? Jolly well done, @kmobs."
+}

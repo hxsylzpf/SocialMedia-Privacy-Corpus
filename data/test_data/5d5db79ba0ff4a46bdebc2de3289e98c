@@ -1,0 +1,49 @@
+{
+  "lead": "I think the key question all Australians want answered has been asked by this frog on a unicycle",
+  "id": "commentisfree/2016/jun/17/facebook-leaders-debate-and-you-thought-this-election-couldnt-get-any-worse",
+  "words": {
+    "election": 1,
+    "question": 1,
+    "think": 2,
+    "unicycle": 1,
+    "frog": 1,
+    "leader": 1,
+    "key": 1,
+    "bad": 1,
+    "debate": 1,
+    "facebook": 1,
+    "ask": 1,
+    "want": 1,
+    "answer": 1
+  },
+  "title": "Facebook leaders' debate: and you thought this election couldn't get any worse | First Dog on the Moon",
+  "core-words": {
+    "election": 1,
+    "question": 1,
+    "think": 2,
+    "unicycle": 1,
+    "frog": 1,
+    "leader": 1,
+    "key": 1,
+    "bad": 1,
+    "debate": 1,
+    "facebook": 1,
+    "ask": 1,
+    "want": 1,
+    "answer": 1
+  },
+  "class": null,
+  "tags": [
+    "australia-news/australian-election-2016",
+    "australia-news/australia-news",
+    "australia-news/australian-politics",
+    "australia-news/bill-shorten",
+    "australia-news/malcolm-turnbull",
+    "technology/facebook",
+    "technology/technology",
+    "media/socialnetworking",
+    "media/media",
+    "media/australia-media"
+  ],
+  "content": ""
+}

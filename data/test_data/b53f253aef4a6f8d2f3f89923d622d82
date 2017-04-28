@@ -1,0 +1,37 @@
+{
+  "lead": "All today's Guardian Technology news in one online newspaper format. By Jemima Kiss",
+  "id": "media/pda/2010/aug/25/paperli",
+  "words": {
+    "format": 1,
+    "news": 1,
+    "feed": 2,
+    "list": 1,
+    "newspaper": 1,
+    "online": 1,
+    "paper.li": 2,
+    "day": 1,
+    "result": 1,
+    "fee": 1
+  },
+  "title": "Just out - today's Guardian Tech on paper.li",
+  "core-words": {
+    "format": 1,
+    "news": 1,
+    "feed": 2,
+    "list": 1,
+    "newspaper": 1,
+    "online": 1,
+    "paper.li": 2,
+    "day": 1,
+    "result": 1,
+    "fee": 1
+  },
+  "class": null,
+  "tags": [
+    "media/newspaper-formats",
+    "media/media",
+    "media/digital-media",
+    "technology/twitter"
+  ],
+  "content": "We feed all Guardian Technology's Twitter feeds into one list, feed that into Paper.li - and, once a day, this is the result..."
+}

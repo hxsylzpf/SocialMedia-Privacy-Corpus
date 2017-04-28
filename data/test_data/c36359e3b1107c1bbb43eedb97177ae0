@@ -1,0 +1,27 @@
+{
+  "lead": "Your daily dose of social media required reading",
+  "id": "media/pda/2009/jul/31/twitter-microsoft",
+  "words": {
+    "social": 2,
+    "dose": 2,
+    "require": 2,
+    "read": 2,
+    "medium": 2
+  },
+  "title": "Your daily dose of social media required reading",
+  "core-words": {
+    "social": 2,
+    "dose": 2,
+    "require": 2,
+    "read": 2,
+    "medium": 2
+  },
+  "class": null,
+  "tags": [
+    "technology/twitter",
+    "technology/microsoft",
+    "technology/google",
+    "technology/skype"
+  ],
+  "content": ""
+}

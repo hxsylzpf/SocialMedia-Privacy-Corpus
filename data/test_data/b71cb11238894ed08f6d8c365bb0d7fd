@@ -1,0 +1,37 @@
+{
+  "class": null,
+  "words": {
+    "blogs": 1,
+    "image": 1,
+    "live": 2,
+    "glean": 1,
+    "tip": 2,
+    "station": 1,
+    "trip": 1,
+    "way": 1
+  },
+  "core-words": {
+    "blogs": 1,
+    "image": 1,
+    "live": 2,
+    "glean": 1,
+    "tip": 2,
+    "station": 1,
+    "trip": 1,
+    "way": 1
+  },
+  "title": "Live trip to Leeds using Twitter tips",
+  "id": "travel/2010/feb/19/leeds-twitter-twitrip-live",
+  "tags": [
+    "travel/leeds",
+    "travel/travel",
+    "technology/twitter",
+    "travel/uk",
+    "travel/short-breaks",
+    "travel/city-breaks",
+    "enjoy-england/yorkshire",
+    "travel/england"
+  ],
+  "content": "Live images:",
+  "lead": "'I'm at the station. What should I do?' Follow Benji Lanyado as he live blogs his way around Leeds using tips gleaned from Twitter"
+}

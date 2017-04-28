@@ -1,0 +1,42 @@
+{
+  "lead": "Have you been paying attention to Lord Justice Leveson's inquiry into the culture, practices and ethics of the press? Test yourself with our quiz",
+  "id": "media/quiz/2012/dec/24/leveson-inquiry-2012-quiz",
+  "class": null,
+  "title": "Leveson inquiry 2012: christmas quiz",
+  "core-words": {
+    "press": 1,
+    "inquiry": 2,
+    "leveson": 2,
+    "culture": 1,
+    "quiz": 2,
+    "test": 1,
+    "pay": 1,
+    "christma": 1,
+    "ethic": 1,
+    "attention": 1,
+    "practice": 1
+  },
+  "words": {
+    "press": 1,
+    "inquiry": 2,
+    "leveson": 2,
+    "culture": 1,
+    "quiz": 2,
+    "test": 1,
+    "pay": 1,
+    "christma": 1,
+    "ethic": 1,
+    "attention": 1,
+    "practice": 1
+  },
+  "tags": [
+    "media/newspapers",
+    "media/leveson-inquiry",
+    "uk/uk",
+    "media/pressandpublishing",
+    "law/lord-justice-leveson",
+    "media/privacy",
+    "media/national-newspapers"
+  ],
+  "content": ""
+}

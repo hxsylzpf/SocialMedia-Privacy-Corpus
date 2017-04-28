@@ -1,0 +1,40 @@
+{
+  "lead": "Tributes have poured in for the late actor, who was found dead in his New York apartment of a suspected drug overdose",
+  "id": "film/filmblog/2014/feb/02/philip-seymour-hoffman-twitter",
+  "words": {
+    "dead": 2,
+    "mourn": 1,
+    "find": 2,
+    "late": 1,
+    "pour": 1,
+    "suspect": 1,
+    "aged": 1,
+    "drug": 1,
+    "actor": 2,
+    "overdose": 1,
+    "apartment": 1,
+    "tributes": 1
+  },
+  "title": "Philip Seymour Hoffman: Hollywood mourns actor found dead aged 46",
+  "core-words": {
+    "dead": 2,
+    "mourn": 1,
+    "find": 2,
+    "late": 1,
+    "pour": 1,
+    "suspect": 1,
+    "aged": 1,
+    "drug": 1,
+    "actor": 2,
+    "overdose": 1,
+    "apartment": 1,
+    "tributes": 1
+  },
+  "class": null,
+  "tags": [
+    "film/philipseymourhoffman",
+    "technology/twitter",
+    "culture/culture"
+  ],
+  "content": ""
+}

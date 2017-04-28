@@ -1,0 +1,34 @@
+{
+  "class": null,
+  "words": {
+    "epic": 1,
+    "page": 1,
+    "apart": 1,
+    "tell": 1,
+    "poet": 1,
+    "quiz": 1,
+    "poem": 1,
+    "publish": 1
+  },
+  "core-words": {
+    "epic": 1,
+    "page": 1,
+    "apart": 1,
+    "tell": 1,
+    "poet": 1,
+    "quiz": 1,
+    "poem": 1,
+    "publish": 1
+  },
+  "title": "Who's the poet: Pamela Anderson or Sylvia Plath? Take our quiz",
+  "id": "books/shortcuts/quiz/2014/jul/11/poet-pamela-anderson-sylvia-plath-quiz",
+  "tags": [
+    "books/sylviaplath",
+    "technology/facebook",
+    "technology/technology",
+    "books/poetry",
+    "culture/television"
+  ],
+  "content": "",
+  "lead": "Pamela Anderson has published a 1,209-word epic poem on her Facebook page. Why not see if you can tell her apart from Sylvia Plath?"
+}

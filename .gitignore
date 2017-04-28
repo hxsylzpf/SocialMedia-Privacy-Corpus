@@ -2,7 +2,10 @@
 api_key
 
 # Data store
-data
+data/*
+!data/test_data
+!data/training_data
+!data/*.pkl
 
 # Example library
 document_cluster/

@@ -1,0 +1,30 @@
+{
+  "lead": "Your daily dose of social media required reading",
+  "id": "media/pda/2009/jul/13/twitter-searchengines-google-maps-locationbasedservices",
+  "words": {
+    "social": 2,
+    "dose": 2,
+    "require": 2,
+    "read": 2,
+    "medium": 2
+  },
+  "title": "Your daily dose of social media required reading",
+  "core-words": {
+    "social": 2,
+    "dose": 2,
+    "require": 2,
+    "read": 2,
+    "medium": 2
+  },
+  "class": null,
+  "tags": [
+    "technology/searchengines",
+    "technology/google",
+    "technology/twitter",
+    "media/socialnetworking",
+    "media/digital-media",
+    "media/media",
+    "media/social-media"
+  ],
+  "content": ""
+}

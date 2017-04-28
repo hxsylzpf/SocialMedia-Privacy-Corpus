@@ -1,0 +1,41 @@
+{
+  "class": null,
+  "words": {
+    "blogs": 1,
+    "live": 2,
+    "lanyado": 1,
+    "tip": 1,
+    "way": 1,
+    "twitrip": 1,
+    "glean": 1,
+    "newcastle": 1,
+    "benji": 1,
+    "follow": 1
+  },
+  "core-words": {
+    "blogs": 1,
+    "live": 2,
+    "lanyado": 1,
+    "tip": 1,
+    "way": 1,
+    "twitrip": 1,
+    "glean": 1,
+    "newcastle": 1,
+    "benji": 1,
+    "follow": 1
+  },
+  "title": "LIVE: TwiTrip to Newcastle",
+  "id": "travel/2010/sep/28/twitrip-newcastle-twitter",
+  "tags": [
+    "travel/newcastle",
+    "travel/travel",
+    "travel/uk",
+    "technology/twitter",
+    "technology/technology",
+    "enjoy-england/enjoy-england-twitrips",
+    "enjoy-england/enjoy-england",
+    "travel/england"
+  ],
+  "content": "",
+  "lead": "Follow Benji Lanyado as he live blogs his way around Newcastle using your tips gleaned from Twitter"
+}

@@ -1,0 +1,33 @@
+{
+  "lead": "Follow Benji Lanyado as he live blogs his way around Marseille using your Twitter tips",
+  "id": "travel/2011/mar/24/twitrip-marseille-twitter",
+  "words": {
+    "lanyado": 1,
+    "follow": 1,
+    "benji": 1,
+    "tip": 1,
+    "way": 1,
+    "twitrip": 1,
+    "blogs": 1,
+    "live": 2
+  },
+  "title": "LIVE: TwiTrip to Marseille",
+  "core-words": {
+    "lanyado": 1,
+    "follow": 1,
+    "benji": 1,
+    "tip": 1,
+    "way": 1,
+    "twitrip": 1,
+    "blogs": 1,
+    "live": 2
+  },
+  "class": null,
+  "tags": [
+    "travel/marseille",
+    "travel/france",
+    "travel/travel",
+    "technology/twitter"
+  ],
+  "content": ""
+}

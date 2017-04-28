@@ -1,0 +1,43 @@
+{
+  "lead": "Dan Sabbagh: How Twitter users responded to the Guardian using graphic pictures of the late dictator on its front page",
+  "id": "media/2011/oct/21/gaddafi-death-images",
+  "words": {
+    "dictator": 1,
+    "user": 1,
+    "gaddafi": 1,
+    "twitter": 1,
+    "graphic": 1,
+    "image": 1,
+    "late": 1,
+    "death": 1,
+    "page": 1,
+    "respond": 1,
+    "picture": 1
+  },
+  "title": "Gaddafi death images: should the Guardian have used them?",
+  "core-words": {
+    "dictator": 1,
+    "user": 1,
+    "gaddafi": 1,
+    "twitter": 1,
+    "graphic": 1,
+    "image": 1,
+    "late": 1,
+    "death": 1,
+    "page": 1,
+    "respond": 1,
+    "picture": 1
+  },
+  "class": null,
+  "tags": [
+    "media/theguardian",
+    "media/social-media",
+    "media/digital-media",
+    "media/newspapers",
+    "media/pressandpublishing",
+    "media/media",
+    "world/muammar-gaddafi",
+    "world/world"
+  ],
+  "content": "."
+}
