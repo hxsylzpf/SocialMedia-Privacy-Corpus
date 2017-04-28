@@ -2,7 +2,7 @@
 Privacy class project to use machine learning to build a social media privacy corpus. Involves building and evaluating various classifiers and then using statistical methods and clustering to perform analysis on the resulting corpus.
 
 ## Contributors
-Michael Meli (@mjmeli), Kylie Geller (@kgeller)
+Michael Meli (@[mjmeli](https://github.com/mjmeli)) and Kylie Geller (@[kgeller](https://github.com/kgeller))
 
 ## Requirements
 Python 3 only
