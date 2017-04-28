@@ -24,10 +24,10 @@ from sklearn.manifold import MDS
 
 # Enable/disable certain features in this script
 SENTIMENT_ALL_ARTICLES = False
-ARTICLES_PER_MONTH = False
+ARTICLES_PER_MONTH = True
 PLATFORM_FREQUENCY = False
 HIERARCHICAL_CLUSTERING = False
-KMEANS_CLUSTERING = True
+KMEANS_CLUSTERING = False
 
 # Load the corpus records
 data_folder = config.get_test_data_folder_path()
