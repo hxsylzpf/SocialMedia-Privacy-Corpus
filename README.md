@@ -54,6 +54,7 @@ Once the training data is downloaded, you can compare the different classifiers 
 
 If you ran through step 6 above, the classification results will be in `data/classified`. The YES results must be moved to the corpus folder and renamed as `ids` for the following step.
 
+    cp data/classified/yes.ids corpus/ids
     python summarize_corpus.py
 
 ## Don't want to download data?
