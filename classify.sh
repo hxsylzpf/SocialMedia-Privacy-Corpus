@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Required
+# Required steps for classification
 python scripts/get_training_data.py
 python scripts/preprocess_training_data.py
 python scripts/build_classifier.py

@@ -1,0 +1,17 @@
+{
+  "id": "commentisfree/henryporter/2009/may/21/privacy-and-the-net-facebook",
+  "class": true,
+  "title": "Privacy and the net | Henry Porter",
+  "lead": "Henry Porter: A new study reveals that popular social networking sites including Facebook and MySpace retain copies of users' 'deleted' photos",
+  "content": "Social networking sites are often used by government ministers as an example of the profound way attitudes to privacy have changed. They argue that the young generation invade their own privacy to a far greater extent than the government ever would. The implication is that the older people who object to government intrusion are living in the past. The response to this is that people who use social networking sites voluntarily reveal things about themselves and have a degree of control of over how long information and photographs stay in the public domain, while the government collects and stores information without permission and allows the subject no access to the data held. There is no obvious comparison between the two activities. But this doesn't let the social networking sites off the hook. Most internet companies claim a kind of morality free status when it comes to such issues as privacy and copyright, and Web 2.0 sites are no different. A study published this week by Cambridge PhD students shows that nearly half of all social networking sites retain copies of photographs after being \"deleted\" by users. The study examined 16 popular websites that host user-uploaded photos, including social networking sites, blogging sites and dedicated-photo-sharing sites. Seven of the 16 sites surveyed were still maintaining copies of users' photos after they had been deleted by the user. The researchers \u2013 Jonathan Anderson, Andrew Lewis, Joseph Bonneau and lecturer Frank Stajano \u2013 found that by keeping a note of the URL where the photo is actually stored in a content delivery network, it was possible for them to access the photo even after it had been deleted. Their report says: Social networking sites fared especially poorly in the study, with four of eight failing to remove deleted photos, including industry leaders Facebook, MySpace, hi5, and Bebo. Blogging sites also fared poorly, with LiveJournal, Xanga, and SkyRock all failing to remove photos. Faring well in the study were the dedicated photo sharing sites Flickr, Photobucket, and Fotki, which all removed photos within 1 hour. Three Google-operated websites, Blogger, Picasa, and Orkut, all removed photos within 48 hours. Microsoft's Windows Live Spaces received special commendation for removing photos instantly. This may all seem rather small beer in the great scheme of privacy issues but the Cambridge team has done some valuable research that will steer users to more conscientious sites. Joseph Bonneau makes a good point when he says, \"This demonstrates how social networking sites often take a lazy approach to user privacy, doing what's simpler rather than what is correct. It's imperative to view privacy as a design constraint, not a legal add-on.\" That last statement should be the guiding ethic for all web companies, to say nothing of the government.",
+  "tags": [
+    "technology/technology",
+    "technology/facebook",
+    "technology/myspace",
+    "technology/bebo",
+    "world/privacy",
+    "technology/internet"
+  ],
+  "core-words": null,
+  "words": null
+}

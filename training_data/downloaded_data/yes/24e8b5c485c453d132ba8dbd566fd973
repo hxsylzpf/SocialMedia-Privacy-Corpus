@@ -1,0 +1,20 @@
+{
+  "id": "technology/2010/oct/18/facebook-apps-data-privacy",
+  "class": true,
+  "title": "Facebook apps 'leaking details to advertisers'",
+  "lead": "Social networking site will be concerned that applications such as FarmVille can reveal user IDs despite strong privacy settings",
+  "content": "Many applications on Facebook can pass on information that personally identifies users and friends to advertisers and \"internet tracking agencies\", the Wall Street Journal reports, saying it can affect people even with the strictest privacy settings enabled. A Facebook spokesman told the news organisation on Sunday night that the social media site is moving to \"dramatically limit\" the leaking of users' personal information, as it breaks the site's own rules. The report says that many apps grab a user's ID number, which is unique, and can then pass them on to internet advertising companies. It says that all of the 10 most popular apps did so, including Zynga's FarmVille, Texas HoldEm Poker and FrontierVille. Three of the top 10, including FarmVille, also transmitted personal information about the user's friends to external companies. The data transmitted \u2013 the \"Facebook ID\" \u2013 is unique to each user, and can be used to look up your name even if your profile is set at its strictest setting. It also reveals any data that has been set to be visible to \"everyone\" on the site \u2013 which in fact means visible across the web. For Facebook, it is the latest in a long line of privacy concerns, but one which the site may also be concerned about \u2013 because if internet advertising companies can extract value from Facebook about user IDs, it might make them less likely to buy advertising on the site. In that way, the leaching of Facebook IDs, and of people's \"social graphs\" \u2013 who they are linked to \u2013 will be of great concern to Facebook, which derives its value from being able to act as the go-between for highly targeted advertising served to its users. The WSJ said that the apps were sending Facebook IDs to at least 25 advertising and data firms, which build profiles of people by tracking them online. The row over what data can safely be made available \u2013 and to what extent advertisers and tracking companies could and should be able to identify people from their browsing \u2013 is longstanding. In the 1990s the activities of the advertising company DoubleClick caused concern when it was realised that it could target people because it provided \"cookies\" on each site that they visited, and target ads at them. DoubleClick is now owned by Google. More recently it has been Facebook, with its 500 million users, which has come repeatedly into the privacy spotlight. The WSJ says \"one data-gathering firm, RapLeaf Inc, had linked Facebook user ID information obtained from apps to its own database of internet users, which it sells. RapLeaf also transmitted the Facebook IDs it obtained to a dozen other firms, the Journal found.\" Rapleaf told the paper: \"We didn't do it on purpose\". Collecting user and friends' IDs would let companies build up individual profiles of people who it could cross-match against other data collected from censuses and public information to create detailed profiles of people. While advertisers argue that that means better-targeted information, it concerns many people who are unsure what data is held about them personally by such companies. Earlier this month the Guardian showed that many people's phone details are retained on Facebook without their knowledge following uploads from their mobile phones or external email systems \u2013 and a BBC investigation found that even people who were not signed up to the site would be identifiable to it, based on details supplied by their friends, as soon as they provided an email address.",
+  "tags": [
+    "technology/facebook",
+    "technology/internet",
+    "technology/data-computer-security",
+    "technology/technology",
+    "media/digital-media",
+    "media/socialnetworking",
+    "media/media",
+    "world/privacy",
+    "uk/uk"
+  ],
+  "core-words": null,
+  "words": null
+}

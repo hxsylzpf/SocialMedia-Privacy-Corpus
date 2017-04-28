@@ -1,0 +1,17 @@
+{
+  "id": "technology/2014/jan/07/google-hangouts-faces-criticism-after-outing-trans-woman",
+  "class": true,
+  "title": "Android and Google+ confusion outs trans woman",
+  "lead": "The company's decision to amalgamate its SMS and chat apps has made it too easy for users to leak personal information. By Alex Hern",
+  "content": "Google is facing renewed criticism over the integration of Google+ into its Android operating system after a transgender woman was outed when using Google's Hangouts app. Since the release of the latest mobile software Android 4.4, codenamed KitKat, the instant messaging app Hangouts has become the default text-messaging app on phones and tablets running with the newly installed operating system. But the behaviour of the app is confusing even to seasoned Android users, and can result in personal information being inadvertently shared. If a message is sent as an SMS, the recipient only sees the phone number it came from, but if it is sent as a Google message, then they can see the sender's entire public Google profile. In at least one instance, this has already caused serious problems. A trans woman, still using her old (male) name at work, intended to send a text message to a colleague. Instead, she sent a GChat message under the female name on her Google+ account. \"I'm just glad I live in a state where it'd be illegal to fire me,\" said the woman, who asked not to be named in this piece while she discusses matters with her employers. \"Somehow I didn't think through the potential consequences of Google+ embedding itself ever deeper into stock Android stuff.\" When typing a name into the Hangouts app, if there are not many results in a users address book the app begins to search Google+ for matches instead; a simple mis-click can result in users sending a message revealing more contextual information than they intended. When Google+ was launched, the company faced criticism over its insistence that users use their real names on the site. That policy was weakened in the months following its launch, and now Google allows people to use \"established identities\" as well as real names. But as vice president of product, Bradley Horowitz, wrote in 2012: \"It's important to remember that when you change your name in Google+, you're changing it across all services that require a Google profile.\" The company has also been attacked for default settings on its devices and services which are too dismissive of users' privacy expectations. In October, Google announced that it would begin attaching individuals' data to adverts, sparking a revolt that saw many Google+ users changing their profile pictures to photographs of executive chairman Eric Schmidt. And in December, an update to Android briefly allowed users to manage privacy settings for individual apps, before Google pulled the function. The Electronic Frontier Foundation, which campaigns for digital freedoms, called the lack of per-app settings \"a Stygian hole in the Android security model\u2026 Embarrassingly, it is also one that Apple managed to fix in iOS years ago\". \u2022 This article was amended on 7 January 2014 to clarify that the incident involved user error.",
+  "tags": [
+    "technology/google",
+    "technology/google-plus",
+    "media/socialnetworking",
+    "technology/technology",
+    "technology/smartphones",
+    "society/transgender"
+  ],
+  "core-words": null,
+  "words": null
+}

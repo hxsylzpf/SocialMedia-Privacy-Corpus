@@ -1,0 +1,19 @@
+{
+  "id": "technology/2016/jun/10/twitter-locks-millions-accounts-passwords-leak",
+  "class": false,
+  "title": "Twitter locks millions of accounts after passwords posted for sale",
+  "lead": "Social network responds to username and password leak by locking affected accounts after spate of hacks targeting Katy Perry, Mark Zuckerberg and NFL",
+  "content": "Twitter has been forced to lock millions of users' accounts after 33m purported account details were posted for sale on the dark web. The details, which were revealed and made available by security site LeakedSource on Wednesday, are thought to be gleaned from other sources, rather than a direct attack on the social network. Michael Coates, Twitter's trust and information security officer, said: \"We've investigated claims of Twitter @names and passwords available on the dark web, and we're confident the information was not obtained from a hack of Twitter's servers.\" Both LeakedSource and Twitter suggest that the database of records could have been created by combining information from other breaches or from password-stealing malware on user machines. Coates said: \"In each of the recent password disclosures, we cross-checked the data with our records. As a result, a number of Twitter accounts were identified for extra protection. Accounts with direct password exposure were locked and require a password reset by the account owner.\" Twitter declined to state precisely how many accounts were affected, but the number is thought to be in the millions. The social network has already notified affected users via email. Those who did not receive the email who attempt to log into the social network will find their accounts locked. The action follows a string of high-profile Twitter account hacks, including Facebook's chief executive, Mark Zuckerberg, Katy Perry \u2013 Twitter's most followed account \u2013 and the official NFL account. The recent breaches have been blamed on the reuse of usernames and passwords across sites. Zuckerberg's Twitter and Pinterest accounts were reportedly compromised using login details gleaned from a hack of LinkedIn in 2012. Twitter advises the use of unique passwords as well as the activation of two-step verification, which requires verification of login attempts using SMS, Twitter app notifications or similar technology, to help protect their accounts. Twitter warns users they may have been hacked by 'state-sponsored actors'",
+  "tags": [
+    "technology/hacking",
+    "technology/twitter",
+    "media/social-media",
+    "media/socialnetworking",
+    "technology/data-computer-security",
+    "technology/technology",
+    "media/media",
+    "technology/internet"
+  ],
+  "core-words": null,
+  "words": null
+}

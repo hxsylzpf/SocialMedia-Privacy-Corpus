@@ -24,6 +24,12 @@ data.create_data_folder(DATA_FOLDER_PATH)
 # ID file containing IDs of data to retrieve
 (TEST_ID_DATA_PATH, ID_FILE) = config.get_test_data_id_file_paths()
 
+# Copy pre-downloaded test data to the directory
+if shouldReuse:
+    print("Copying pre-downloaded data...")
+    predownloaded_dir = os.path.join(TEST_ID_DATA_PATH, "downloaded_data")
+    data.copy_between_folders(predownloaded_dir, DATA_FOLDER_PATH)
+
 # Verify ID file exists
 print("Reading ID files...")
 if not os.path.exists(ID_FILE):

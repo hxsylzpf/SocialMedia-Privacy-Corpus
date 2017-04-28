@@ -21,3 +21,12 @@ def delete_file(f):
 def write_string_to_file(f, string):
     with open(f, 'w+') as f:
         f.write(string)
+
+# Copy data between folders, no overwrite
+def copy_between_folders(from_dir, to_dir):
+    data_to_copy = os.listdir(from_dir)
+    for data in data_to_copy:
+        old_path = os.path.join(from_dir, data)
+        new_path = os.path.join(to_dir, data)
+        if not os.path.exists(new_path):
+            shutil.copyfile(old_path, new_path)

@@ -54,16 +54,7 @@ If you ran through step 6 above, the classification results will be in `data/cla
     python summarize_corpus.py
 
 ## Don't want to download data?
-Downloading data is a hassle (requires an API key) and there is a lot of it (requires time and hits the API limit easily). We've provided the training and test data we used in the following folders:
-
-    training_data/downloaded_data
-    test_data/downloaded_data
-
-Run the following commands to put these in the proper place for the other scripts:
-
-    mkdir -p data
-    cp -r training_data/downloaded_data data/training_data
-    cp -r test_data/downloaded_data data/test_data
+We've provided the data that we downloaded (over 11,000 articles!) for the project. When you run the above scripts, this data will automatically be retrieved and moved into the working set. This will save a lot of API calls!
 
 ## Viewing the Corpus
 We've provided our final corpus in the `corpus/ids` file. This provides the IDs of the articles in our corpus. Each one can be appended to `www.theguardian.com` to get to the article on the website. The corresponding downloaded article exists in the data folders, if you can find them (the file names are the MD5 hashes of the IDs, and the IDs are included inside the file).

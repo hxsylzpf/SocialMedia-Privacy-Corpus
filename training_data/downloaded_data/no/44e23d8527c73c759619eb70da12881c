@@ -1,0 +1,20 @@
+{
+  "id": "technology/2014/sep/10/information-commissioner-apps-failing-user-privacy-information-facebook",
+  "class": false,
+  "title": "Information commissioner: 'apps are failing to respect user privacy'",
+  "lead": "Most apps do not disclose what they do with users' information, says ICO report, while many 'leave users struggling to find basic privacy information'. By Alex Hern",
+  "content": "Most mobile app developers are failing to clearly explain how they are collecting, using and disclosing personal information, according to a study by the pan-governmental Global Privacy Enforcement Network (GPEN). Of the 1,200 apps surveyed, 85% failed to disclose how they used information, while 59% of the apps \"left users struggling to find basic privacy information\", the organisation said. Simon Rice, the group manager for technology at Britain's Information Commissioner's Office, which is a member of the GPEN, said: \"Today's results show that many app developers are still failing to provide this information in a way that is clear and understandable to the average consumer. \"The ICO and the other GPEN members will be writing to those developers where there is clear room for improvement. We will also be publishing guidance to explain the steps people can take to help protect their information when using mobile apps.\" The report found that almost one in three mobile apps \"appeared to request an excessive number of permissions to access additional personal information\" despite ICO guidance for mobile app developers that requires personal data be processed \"fairly\" and \"lawfully\". \"For processing to be fair, the user must have suitable information about the processing and they must to be told about the purposes,\" the organisation warns. \"Fairness is also about using information in ways that people would reasonably expect.\" Long lists of permission requests are becoming increasingly common when users download apps. In August, Facebook experienced a backlash after it made its Messenger app mandatory for users in the US, requiring a long list of permissions for the Android version including access to audio recordings, photos and videos, phone numbers, text messages and contacts, as well as almost thirty other functions. The reaction was so fierce that the company posted an explanation of why it requested so many permissions, arguing that because \"Android controls the way the permissions are named\u2026 the way they're named doesn't necessarily reflect how the Messenger app and other apps use them\". The ICO says it will not share the names of the apps that failed its tests at this time. UK privacy watchdog seeks 'stronger powers' and better funding",
+  "tags": [
+    "technology/smartphones",
+    "world/privacy",
+    "technology/data-computer-security",
+    "technology/data-protection",
+    "technology/facebook",
+    "technology/mobilephones",
+    "media/socialnetworking",
+    "technology/technology",
+    "technology/apps"
+  ],
+  "core-words": null,
+  "words": null
+}

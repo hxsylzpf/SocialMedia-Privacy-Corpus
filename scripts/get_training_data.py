@@ -25,6 +25,14 @@ for folder in (DATA_FOLDER_PATH, YES_FOLDER_PATH, NO_FOLDER_PATH):
 # ID files containing IDs of data to retrieve
 (TRAINING_DATA_PATH, YES_ID_FILE, NO_ID_FILE) = config.get_training_data_id_file_paths()
 
+# Copy pre-downloaded training data to the directory
+if shouldReuse:
+    print("Copying pre-downloaded data...")
+    predownloaded_yes_dir = os.path.join(TRAINING_DATA_PATH, "downloaded_data/yes")
+    predownloaded_no_dir = os.path.join(TRAINING_DATA_PATH, "downloaded_data/no")
+    data.copy_between_folders(predownloaded_yes_dir, YES_FOLDER_PATH)
+    data.copy_between_folders(predownloaded_no_dir, NO_FOLDER_PATH)
+
 # Verify ID files exist
 print("Reading ID files...")
 if not os.path.exists(YES_ID_FILE) or not os.path.exists(NO_ID_FILE):

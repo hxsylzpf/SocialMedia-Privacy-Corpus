@@ -1,0 +1,20 @@
+{
+  "id": "technology/2011/sep/30/facebook-investigation-privacy-concerns",
+  "class": true,
+  "title": "Facebook to be investigated over privacy concerns",
+  "lead": "Irish privacy regulator to audit how social network handles users' data in Europe. By Josh Halliday",
+  "content": "Facebook is to be investigated by the Irish privacy regulator into how it handles users' data across Europe. In the next fortnight the Irish data protection commissioner will launch a wide-ranging privacy audit of the social network after complaints about how Facebook tracks its users online. The Irish regulator will conduct the audit on behalf of authorities in 27 European states, including the UK. The commissioner expects to complete the report before the end of the year, a spokeswoman for the regulator said. Facebook is also under pressure in the US, where the Federal Trade Commission is considering an investigation into the popular website following complaints from a coalition of privacy campaigners. The social network is under the spotlight after changes made last week to how Facebook stores information about its 800 million global users. On Wednesday, Facebook hastily fixed an issue that meant its users were being tracked even when they left the network. Facebook has consistently argued that it did not store the information. A spokeswoman for the Irish data protection commissioner said on Friday the Facebook probe would be its \"most intensive\" to date, due to its popularity. The Irish regulator launched the investigation after it received 22 separate complaints from the online watchdog Europe versus Facebook. The group first lodged complaints with the commissioner about Facebook on 18 August, with the latest filed on 19 September. Most of the complaints focus on how Facebook stores information about its users, including allegations that it does not delete information which it says has been removed and its use of facial recognition technology to tag users' photographs. Facebook says the issue about deleted information most likely relates to users' removing a post from a part of the social network without fully deleting it, adding that facial-recognition software can be switched off in the privacy settings. Investigators from the commissioner's office will conduct the audit at Facebook's Dublin premises in mid-October. Facebook employs 300 people in the Irish capital. A spokeswoman for Facebook said: \"Facebook's European headquarters in Ireland manages the company's compliance with EU data protection law. We are in regular dialogue with the Irish data protection commissioner and we look forward to demonstrating our commitment to the appropriate handling of user data as part of this routine audit.\" On Thursday, users of the online forum Reddit flooded Facebook with requests to send out hard copies of personal data it holds on its users. The campaign followed complaints from users of Spotify and other media websites that everything they watched and listened to online was being automatically shared on the social network. Facebook users have to opt-in to the automatic sharing function, but some have found it overbearing. Spotify introduced a \"private listening\" feature on Thursday, in response to users who complained that they didn't want Facebook friends being notified of every song they listened to.",
+  "tags": [
+    "technology/facebook",
+    "media/media",
+    "technology/internet",
+    "media/socialnetworking",
+    "technology/technology",
+    "world/privacy",
+    "world/world",
+    "media/privacy",
+    "technology/data-protection"
+  ],
+  "core-words": null,
+  "words": null
+}
