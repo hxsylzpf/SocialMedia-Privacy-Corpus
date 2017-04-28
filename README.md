@@ -62,5 +62,39 @@ Run the following commands to put these in the proper place for the other script
     cp -r training_data/downloaded_data data/training_data
     cp -r test_data/downloaded_data data/test_data
 
-## Viewing the Results
+## Viewing the Corpus
 We've provided our final corpus in the `corpus/ids` file. This provides the IDs of the articles in our corpus. Each one can be appended to `www.theguardian.com` to get to the article on the website. The corresponding downloaded article exists in the data folders, if you can find them (the file names are the MD5 hashes of the IDs, and the IDs are included inside the file).
+
+## Results
+Monthly frequency of privacy incidents heatmap:
+![monthly heatmap](http://i.imgur.com/RLKAoH6.png)
+
+Monthly frequency of privacy incidents graph:
+![monthly graph](http://i.imgur.com/vtyNl4i.png)
+
+Platform frequency of privacy incidents heatmap:
+![platform heatmap](http://i.imgur.com/2EavYmd.png)
+
+K-Means clustering on corpus (k=5):
+![kmeans](http://i.imgur.com/oohHUdQ.png)
+
+K-Means clustering unique words:
+
+| Color       | Unique Words  | Count      |
+|:-----------:|:-------------:|:----------:|
+| Red | {website, track, networking, email} | 63 |
+| Blue | {surveillance, request, agency} | 35 |
+| Green | {setting, control, private, consent} | 37 |
+| Yellow | {post, feature, message} | 144 |
+| Cyan | {data, protection, right, rule, consumer, case} | 45 |
+
+Hierarchical clustering on corpus:
+![monthly heatmap](http://i.imgur.com/TioVgXE.png)
+
+Hierarchical clustering unique words:
+
+| Color       | Unique Words  |
+|:-----------:|:-------------:|
+| Cyan | {app, post, photo, message, content} |
+| Red | {government, surveillance, law, right, agency} |
+| Green | {personal, change, setting, control} |
