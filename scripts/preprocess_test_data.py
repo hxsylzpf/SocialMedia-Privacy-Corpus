@@ -39,7 +39,7 @@ if shouldRemove:
         record = helpers.json_string_to_object(record_json)
 
         # Remove the preprocessing
-        preprocessing.remove_preprocessing()
+        preprocessing.remove_preprocessing(record)
 
         # Write the record back out to its file
         record_json = helpers.json_object_to_string(record)
